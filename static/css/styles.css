@@ -135,23 +135,50 @@ footer > div > p {
 
 /* Main */
 main {margin-bottom: 50px;}
+.glow {
+    margin: 1rem;
+    border-radius: 10px;
+    border-width: 2px;
+    border-color: var(--accent-color);
+    border-style: solid;
 
+    box-shadow: 0px 0px 10px 10px var(--accent-color-glow);
+}
+.glow.big {
+    box-shadow: 0px 0px 25px 25px var(--accent-color-glow);
+}
+.icon {
+    width: 100px;
+    height: 100px;
+}
+.small-icons svg {
+    width: 70px;
+    height: auto;
+    fill: #ffffff;
+}
+.profile-pic {
+    border-radius: 50%;
+}
+.white-fill {
+    fill: #ffffff;
+}
+.num-detail {
+    font-weight: bold;
+    color: #ffffff;
+}
 .display-card {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
 
+    margin: auto;
     margin-left: 100px;
     margin-top: 200px;
     padding: 20px;
-    width: 55%;
+    width: 60%;
     
     border-radius: 20px;
-    border-color: var(--accent-color);
-    border-width: 3px;
-    border-style: solid;
-    box-shadow: 0px 0px 25px 25px var(--accent-color-glow);
 
     background-color: var(--secondary-color);
     position: relative;
@@ -177,9 +204,6 @@ main {margin-bottom: 50px;}
 .display-card > div:first-child {
     min-width: 635px;
 }
-.display-card > div:last-child {
-    width: 100%;
-}
 .display-card.left {
     margin-left: 100px;
     margin-right: auto;
@@ -189,22 +213,19 @@ main {margin-bottom: 50px;}
     margin-right: 100px;
 }
 
-.profile-pic {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-}
 
 
-.github-card-container {
+
+.card-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     margin: 1rem;
     gap: 15px;
 }
-.github-card {
+.card {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -213,56 +234,49 @@ main {margin-bottom: 50px;}
     width: 225px;
     height: 200px;
     padding: 1rem;
-    margin: 1rem;
 
-    border-radius: 10px;
-    border-width: 2px;
-    border-color: var(--accent-color);
-    border-style: solid;
-
-    box-shadow: 0px 0px 10px 10px var(--accent-color-glow);
     background-color: var(--tertiary-color);
 
     transition-duration: 0.2s, 0.3s;
     transition-timing-function: ease-in-out;
     transition-property: transform;
 }
-.github-card:hover {
+.card:hover {
     transform: scale(1.1);
 }
-.github-card.fake-card {
+.card.fake-card {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.github-card.fake-card a {
+.card.fake-card a {
     font-size: 1.6rem;
     cursor: pointer;
 }
-.github-card .repo-name h3 {
+.card .repo-name h3 {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     margin: 0px;
 }
-.github-card .repo-name {
+.card .repo-name {
     max-width: 100%;
     margin-bottom: 10px;
 }
-.github-card .repo-details {
+.card .repo-details {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
-.github-card .repo-description {
+.card .repo-description {
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.github-card .repo-visit {
+.card .repo-visit {
     width: 80%;
     margin-top: 0px;
     padding: 5px;
@@ -272,26 +286,37 @@ main {margin-bottom: 50px;}
 
     margin-top: auto;
     margin-bottom: 10px;
+    color: #000000;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#projects {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .github-card-profile {
     display: flex;
     flex-direction: column;
     
-    width: 100%;
-    border-radius: 10px;
-    border-width: 2px;
-    border-color: var(--accent-color);
-    border-style: solid;
-
-    box-shadow: 0px 0px 10px 10px var(--accent-color-glow);
+    width: 290px;
 
     background-color: var(--tertiary-color);
+
+    transition-duration: 0.2s, 0.3s;
+    transition-timing-function: ease-in-out;
+    transition-property: transform;
+}
+.github-card-profile:hover {
+    transform: scale(1.1);
 }
 .github-card-profile .profile-header {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     padding: 1rem;
     border-top-left-radius: 10px;
@@ -302,20 +327,29 @@ main {margin-bottom: 50px;}
     height: 50px;
     border-radius: 50%;
 }
-.github-card-profile .profile-header h3 {
+.github-card-profile .profile-name {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
+}
+.github-card-profile .profile-name h3 {
     margin: 0px;
 }
-.github-card-profile .profile-header h3 span {
+.github-card-profile .profile-name p {
     color: var(--faint-text-color);
+    font-size: 1rem;
+    margin: 0px;
 }
 .github-card-profile .profile-details {
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    padding-top: 0px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    color: var(--faint-text-color);
 }
-.github-card-profile .profile-details span {
+.github-card-profile .profile-details p {
     margin: 0px;
 }
 .github-card-profile .profile-visit {
@@ -330,4 +364,26 @@ main {margin-bottom: 50px;}
 
     margin-top: auto;
     margin-bottom: 10px;
+    color: #000000;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.card-title {
+    font-size: 1.3rem;
+    margin: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.icon-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.space-around {
+    display: flex;
+    justify-content: space-around;
 }

@@ -6,37 +6,59 @@
     <div class="background-home-image">
         <h1>Kyler. V</h1>
     </div>
-    <div class="display-card left">
+    <div class="glow big display-card left">
         <div>
             <h2>Who am i?</h2>
             <p>
-                I am a student at Lakehead Georgian which is a split program between 
-                Lakehead university and Georgian college for computer science. I am 
-                currently in my second year of the program. I plan to graduate in 2027.
-                Some skills I've picked up are the following:
+                I am a computer science student who loves to create and try out
+                new idea when creating software. I have a passion for learning new
+                technologies and programming languages. I'm always looking for new
+                projects to work on and new people to collaborate with. I'm currently
+                looking for a summer internship for 2025. If you have any questions or
+                would like to collaborate on a project, feel free to reach out to me.
             </p>
-            <ul>
-                <li>Database management</li>
-                <li>Web development(html, css, js, php)</li>
-                <li>Advanced Java development</li>
-                <li>...</li>
-            </ul>
-            <a>show more</a>
+            <p>
+                Currently I'm studying at Lakehead Georgian(LUGC) in Barrie, Ontario. 
+                This program has given me the opportunity to learn a variety of skills
+                that I can apply to real world projects. Some of the skills I've learned
+                include:
+            </p>
+            <div class="card-container">
+                {% for skill in skills %}
+                    <div class="glow card space-around">
+                        <h3 class="card-title">{{ skill.name }}</h3>
+                        <div class="icon-container small-icons">
+                            {% for svg in skill.icons %}
+                                {{ svg|safe }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                {% endfor %}
+                <div class="glow card fake-card">
+                    <a>See more skills</a>
+                </div>
+            </div>
         </div>
         <div>
-            <img class="profile-pic" src="/static/images/kyler-profile-pic.jpg" alt="Picture of kyler">
+            <img class="icon profile-pic" src="/static/images/kyler-profile-pic.jpg" alt="Picture of kyler">
         </div>
     </div>
-    <div class="display-card right">
+    <div id="projects" class="glow big display-card right">
         <div>
             <h2>Projects</h2>
             <p>
-                I've worked on many unique projects over the past few years. My most 
-                recent projects that I've added to are the following repositories.
+                I've had the opportunity to work on a variety of innovative and 
+                challenging projects over the past few years. Bellow you'll find
+                my most recent projects that I've been working on or have been
+                contributing to. These repositories highlight my skills in many
+                diverse technologies and programming languages.
             </p>
-            <div class="github-card-container">
+        </div>
+        <div>
+            <div class="card-container">
                 {% for project in projects %}
-                    <div class="github-card">
+                    <div class="glow card">
                         <a class="repo-name" href="{{ project.html }}" target="_blank">
                             <h3>{{ project.name }}</h3>
                         </a>
@@ -49,23 +71,35 @@
                         <a class="repo-visit" href="{{ project.html }}" target="_blank">Visit</a>
                     </div>
                 {% endfor %}
-                <div class="github-card fake-card">
+                <div class="glow card fake-card">
                     <a>See more projects</a>
                 </div>
-            </div>
-        </div>
-        <div>
-            <div class="github-card-profile">
-                <div class="profile-header">
-                    <img class="profile-pic" src="{{ account.avatar }}" alt="Kyler's GitHub profile picture">
-                    <h3 class="profile-name">{{ account.username }}<span>{{ account.name }}</span></h3>
+                <div class="glow github-card-profile ">
+                    <div class="profile-header">
+                        <img class="profile-pic" src="{{ account.avatar }}" alt="Kyler's GitHub profile picture">
+                        <div class="profile-name">
+                            <h3>{{ account.username }}</h3>
+                            <p>{{ account.name }}</p>
+                        </div>
+                    </div>
+                    <div class="profile-details">
+                        <p class="profile-followers">
+                            <!-- Icon from: www.github.com -->
+                            <svg text="muted" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="white-fill">
+                                <path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4 4 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.549-.514 3.507 3.507 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 5.5.75.75 0 0 1 11 4Zm-5.5-.5a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 3.5Z"></path>
+                            </svg>
+                            <span class="num-detail">{{ account.followers }}</span> followers <span class="num-detail">{{ account.following }} </span> following
+                        </p>
+                        <p class="profile-repos">
+                            <!-- Icon from: www.github.com -->
+                            <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="white-fill">
+                                <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path>
+                            </svg>
+                            <span class="num-detail">{{ account.repos }}</span> public repos
+                        </p>
+                    </div>
+                    <a class="profile-visit" href="{{ account.url }}" target="_blank">View profile</a>
                 </div>
-                <div class="profile-details">
-                    <span class="profile-followers">Followers: {{ account.followers }}</span>
-                    <span class="profile-following">Following: {{ account.following }}</span>
-                    <span class="profile-repos">Public Repos: {{ account.repos }}</span>
-                </div>
-                <a class="profile-visit" href="{{ account.url }}" target="_blank">View profile</a>
             </div>
         </div>
     </div>
