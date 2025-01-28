@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Kyler's portfolio{% endblock %}</title>
+        <link rel="stylesheet" href="/static/css/styles.css ">   
+    </head>
+    <body>
+        <header>
+            <div id="head-container">
+                <div>
+                    <a class="logo"><img class="logo" src="/static/images/logo.png" alt="Logo"></a>
+                    <a><h2>Home</h1></a>
+                    <a><h2>About</h1></a>
+                    <a><h2>Projects</h1></a>
+                </div>
+                <div>
+                    <a><h2>Contact</h1></a>
+                    <a><h2>Login / Register</h1></a>
+                </div>
+            </div>
+        </header>
+        <main>
+            {% block content %}
+            <h1>404 Page not found</h1>
+            {% endblock %}
+        </main>
+        <footer>
+            <div>
+                <p>Quick links</p>
+            </div>
+            <ul>
+                <li>
+                    <ul>
+                        <li><a>Home</a></li>
+                        <li><a>About</a></li>
+                        <li><a>Projects</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul>
+                        <li><a>Contact</a></li>
+                        <li><a>Login / Register</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <p>&copy 2025 Kyler Visser</p>
+        </footer>
+    </body>
+</html>
+
