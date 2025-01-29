@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, render_template
+from getColors import run as getColors
 import requests
 import os
 
 app = Flask(__name__)
+COLORS = getColors()
 
 # Get the Github account details
 def getGithubAccount() -> dict:
@@ -31,6 +33,30 @@ def getGithubAccount() -> dict:
         }
 
 def getGithubRepos(limit: int=-1) -> list[dict]:
+    def getRepoLanguageMakeup(url: str) -> dict:
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            # Example data
+            # {
+            #   "JavaScript": 172770,
+            #   "Python": 65226,
+            #   "HTML": 25923,
+            #   "CSS": 19182
+            # }
+            total = sum(data.values())
+            result = {}
+            for key in data:
+                result[key.lower()] = {
+                    "percent": round((data[key] / total) * 100, 2),
+                    "color": COLORS[key]["color"] if key in COLORS else "#000000"
+                }
+            
+            return result
+        else:
+            return {}
+        
+    
     url = "https://api.github.com/users/CommanderKV/repos"
     response = requests.get(url)
     if response.status_code == 200:
@@ -42,12 +68,13 @@ def getGithubRepos(limit: int=-1) -> list[dict]:
         # Return the required data
         return [
             {
-            "name": repo["name"],
-            "description": repo["description"] or "No description available",
-            "stars": repo["stargazers_count"],
-            "forks": repo["forks"],
-            "language": repo["language"] or "Unknown",
-            "url": repo["html_url"]
+                "name": repo["name"],
+                "description": repo["description"] or "No description available",
+                "stars": repo["stargazers_count"],
+                "forks": repo["forks"],
+                "language": repo["language"] or "Unknown",
+                "languages": getRepoLanguageMakeup(repo["languages_url"]),
+                "url": repo["html_url"]
             }
             for repo in repos
         ]
@@ -93,10 +120,12 @@ def home():
     )
 
 # GET: /projects
+@app.route("/projects")
 def projects():
     return render_template(
         "projects.html", 
-        projects=getGithubRepos()
+        projects=getGithubRepos(),
+        account=getGithubAccount()
     )
 
 # GET: /api
