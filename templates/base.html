@@ -5,19 +5,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Kyler's portfolio{% endblock %}</title>
         <link rel="stylesheet" href="/static/css/styles.css ">
+        <link rel="stylesheet" href="/static/css/contact.css">
         {% block styles %}{% endblock %}
     </head>
     <body>
         <header>
             <nav id="head-container">
                 <div>
-                    <a class="logo"><img class="logo" src="/static/images/logo.png" alt="Logo"></a>
-                    <a>Home</a>
+                    <a class="logo" href="/">
+                        <img class="logo" src="/static/images/logo.png" alt="Logo">
+                    </a>
+                    <a href="/">Home</a>
                     <a>About</a>
-                    <a>Projects</a>
+                    <a href="{{ url_for('projects') }}">Projects</a>
                 </div>
                 <div>
-                    <a>Contact</a>
+                    <a href="{{ url_for('contact') }}">Contact</a>
                     <a>Login / Register</a>
                 </div>
             </nav>
@@ -34,20 +37,22 @@
             <ul>
                 <li>
                     <ul>
-                        <li><a>Home</a></li>
+                        <li><a href="/">Home</a></li>
                         <li><a>About</a></li>
-                        <li><a>Projects</a></li>
+                        <li><a href="{{ url_for('projects') }}">Projects</a></li>
                     </ul>
                 </li>
                 <li>
                     <ul>
-                        <li><a>Contact</a></li>
+                        <li><a href="{{ url_for('contact') }}">Contact</a></li>
                         <li><a>Login / Register</a></li>
                     </ul>
                 </li>
             </ul>
             <p>&copy 2025 Kyler Visser</p>
         </footer>
+        <script src="/static/js/contactScript.js"></script>
+        {% block scripts %}{% endblock %}
     </body>
 </html>
 

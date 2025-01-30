@@ -26,7 +26,7 @@
 .github-card-profile:hover {
     transform: scale(1.1);
 }
-.github-card-profile .profile-header {
+.profile-header {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -35,25 +35,25 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-.github-card-profile .profile-header img {
+.profile-header img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
 }
-.github-card-profile .profile-name {
+.profile-name {
     display: flex;
     flex-direction: column;
     padding-left: 1rem;
 }
-.github-card-profile .profile-name h3 {
+.profile-name h3 {
     margin: 0px;
 }
-.github-card-profile .profile-name p {
+.profile-name p {
     color: var(--faint-text-color);
     font-size: 1rem;
     margin: 0px;
 }
-.github-card-profile .profile-details {
+.profile-details {
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -62,8 +62,12 @@
     border-bottom-right-radius: 10px;
     color: var(--faint-text-color);
 }
-.github-card-profile .profile-details p {
+.profile-details p {
     margin: 0px;
+}
+.profile-bio {
+    margin: 1rem;
+    margin-top: 0px;
 }
 
 
@@ -92,7 +96,9 @@
     transition-timing-function: ease-in-out;
     transition-property: transform;
 }
-.github-card.short {
+.github-card.short,
+.github-card-profile.short,
+.github-card.fake-card.short {
     width: 225px;
     height: 200px;
 }
@@ -105,8 +111,13 @@
     align-items: center;
 }
 .github-card.fake-card a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 1.6rem;
     cursor: pointer;
+    height: 100%;
+    width: 100%;
 }
 .github-card .repo-name h3 {
     white-space: nowrap;
@@ -120,34 +131,142 @@
 }
 .github-card .repo-details {
     width: 100%;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.github-card .repo-details > div:first-child {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+    color: var(--faint-text-color);
+}
+.github-card .repo-details > div:first-child p {
+    margin: 0px;
+}
+.repo-description {
+    width: 80%;
+    text-align: center;
 }
 .github-card .repo-description.short {
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
 /* Language breakdown */
+.repo-languages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+}
+.profile-details .repo-languages {
+    margin-top: 10px;
+}
 .repo-languages-makeup {
+    width: 100%;
     display: flex;
     height: 10px;
-    border-radius: 5px;
-    overflow: hidden;
-    background-color: #e1e4e8;
+    border-radius: 10px;
     margin-bottom: 10px;
 }
-.repo-language-bar {
-    height: 100%;
+.repo-languages-makeup .repo-language-bar:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
+.repo-languages-makeup .repo-language-bar:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.repo-languages-list {
+    margin-top: 0px;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.repo-languages-list li {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    cursor: default;
+}
+/* .repo-language-bar,
+.repo-languages-list li {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Makes text and bar scale up on hover /
+.repo-languages .repo-language-bar:hover,
+.repo-languages .repo-language-bar:hover ~ .repo-languages .repo-languages-list li[data-language] {
+    height: 15px;
+    transform: scale(1.2);
+    color: #ffffff;
+    border-radius: 10px;
+}
+.repo-languages .repo-languages-list li:hover + 
+.repo-languages .repo-language-bar[data-language] {
+    transform: scale(1.2);
+    height: 15px;
+    color: #ffffff;
+    border-radius: 10px;
+} */
+
 .language-dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
     display: inline-block;
     margin-right: 5px;
+}
+
+/* Dashboard setup */
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    height: 80vh;
+    width: 90%;
+    margin-bottom: 200px;
+}
+.dashboard > div:first-child {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--secondary-color);
+    height: -webkit-fill-available;
+    width: 30%;
+    padding: 1rem;
+    border-radius: 10px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+/* Scrollbar styling */
+.scroll {
+    width: 100%;
+    height: -webkit-fill-available;
+    overflow-y: scroll;
+}
+.scroll::-webkit-scrollbar {
+    width: 12px;
+}
+.scroll::-webkit-scrollbar-track {
+    background: none;
+    border-radius: 10px;
+}
+.scroll::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 10px;
+    border: 2px solid var(--accent-color);
 }

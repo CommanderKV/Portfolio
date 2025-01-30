@@ -2,13 +2,20 @@
 
 {% block title %}Kyler's Portfolio{% endblock %}
 
+{% block styles %}
+    <link rel="stylesheet" href="/static/css/projects.css">
+{% endblock %}
+
 {% block content %}
     <div class="background-home-image header">
         <h1>Kyler. V</h1>
     </div>
     <div class="glow big display-card left">
         <div>
-            <h2>Who am i?</h2>
+            <div>
+                <h2>Who am i?</h2>
+                <img class="profile-pic" src="/static/images/kyler-profile-pic.jpg" alt="Icon of kyler">
+            </div>
             <p>
                 I am a computer science student who loves to create and try out
                 new idea when creating software. I have a passion for learning new
@@ -35,13 +42,10 @@
                     </div>
                     
                 {% endfor %}
-                <div class="glow github-card fake-card">
+                <div class="glow github-card fake-card short">
                     <a>See more skills</a>
                 </div>
             </div>
-        </div>
-        <div>
-            <img class="profile-pic" src="/static/images/kyler-profile-pic.jpg" alt="Picture of kyler">
         </div>
     </div>
     <div id="projects" class="glow big display-card right">
@@ -63,18 +67,19 @@
                             <h3>{{ project.name }}</h3>
                         </a>
                         <div class="repo-details">
-                            <span class="repo-stars">★ {{ project.stars }} stars</span>
-                            <span class="repo-forks">🍴 {{ project.forks }} forks</span>
-                            <span class="repo-lang">{{ project.language }}</span>
+                            <div>
+                                <p><span class="white-fill">★ {{ project.stars }}</span> stars</p>
+                                <p><span class="white-fill">🍴 {{ project.forks }}</span> forks</p>
+                            </div>
                         </div>
                         <p class="repo-description short">{{ project.description }}</p>
                         <a class="visit" href="{{ project.url }}" target="_blank">Visit</a>
                     </div>
                 {% endfor %}
-                <div class="glow github-card fake-card">
-                    <a>See more projects</a>
+                <div class="glow github-card fake-card short">
+                    <a href="{{ url_for('projects') }}">See more projects</a>
                 </div>
-                <div class="glow github-card-profile ">
+                <div class="glow github-card-profile small">
                     <div class="profile-header">
                         <img class="profile-pic" src="{{ account.avatar }}" alt="Kyler's GitHub profile picture">
                         <div class="profile-name">
@@ -103,4 +108,5 @@
             </div>
         </div>
     </div>
+    {% include "contactCard.html" %}
 {% endblock %}
