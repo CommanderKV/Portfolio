@@ -263,3 +263,7 @@ main {margin-bottom: 50px;}
 .top-buffer.big {
     margin-top: 150px;
 }
+.skills {
+    width: 400px !important;
+    height: auto !important;
+}

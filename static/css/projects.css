@@ -87,7 +87,8 @@
     justify-content: flex-start;
     align-items: center;
 
-    width: 400px;
+    width: 100%;
+    max-width: 370px;
     padding: 1rem;
 
     background-color: var(--tertiary-color);
@@ -150,8 +151,9 @@
     margin: 0px;
 }
 .repo-description {
-    width: 80%;
     text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .github-card .repo-description.short {
     display: -webkit-box;
