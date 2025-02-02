@@ -12,7 +12,7 @@
     </div>
     <div class="glow big display-card left">
         <div>
-            <div>
+            <div class="side-by-side">
                 <h2>Who am i?</h2>
                 <img class="profile-pic" src="/static/images/kyler-profile-pic.jpg" alt="Icon of kyler">
             </div>
@@ -43,12 +43,12 @@
                     
                 {% endfor %}
                 <div class="glow github-card fake-card short skills">
-                    <a>See more skills</a>
+                    <a href="{{ url_for('skills') }}">See more skills</a>
                 </div>
             </div>
         </div>
     </div>
-    <div id="projects" class="glow big display-card right">
+    <div class="glow big display-card right">
         <div>
             <h2>Projects</h2>
             <p>

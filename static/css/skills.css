@@ -1,0 +1,49 @@
+
+.background-skills-image {
+    background: linear-gradient(
+        rgba(0, 0, 0, 0), 
+        rgba(0, 0, 0, 0),
+        var(--primary-color)
+    ), 
+    url("/static/images/skills-banner.jpg");
+    background-color: var(--primary-color);
+    background-size: cover;
+    background-position: center;
+}
+#skills-card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+    gap: 15px;
+}
+.skill-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    
+    max-width: 390px;
+
+    padding: 1rem;
+    border-radius: 10px;
+    
+    background-color: var(--tertiary-color);
+    
+    transition: all 0.3s ease;
+}
+.skill-card .skill-title {
+    font-size: 1.3rem;
+    margin: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.skill-card .skill-description {
+    font-size: 1rem;
+    margin: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}

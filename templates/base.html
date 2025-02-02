@@ -4,9 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Kyler's portfolio{% endblock %}</title>
+
+        {% block styles %}{% endblock %}
         <link rel="stylesheet" href="/static/css/styles.css ">
         <link rel="stylesheet" href="/static/css/contact.css">
-        {% block styles %}{% endblock %}
     </head>
     <body>
         <header>
@@ -16,7 +17,15 @@
                         <img class="logo" src="/static/images/logo.png" alt="Logo">
                     </a>
                     <a href="/">Home</a>
-                    <a>About</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle">
+                            About <span class="caret">▼</span>
+                        </a>
+                        <div class="dropdown-menu glow">
+                            <a href="{{ url_for('skills') }}">Skills</a>
+                            <a>Resume</a>
+                        </div>
+                    </div>
                     <a href="{{ url_for('projects') }}">Projects</a>
                 </div>
                 <div>
@@ -51,6 +60,7 @@
             </ul>
             <p>&copy 2025 Kyler Visser</p>
         </footer>
+        <script src="/static/js/base.js"></script>
         <script src="/static/js/contactScript.js"></script>
         {% block scripts %}{% endblock %}
     </body>

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Kyler's skills{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="/static/css/skills.css">
+{% endblock %}
+
+{% block content %}
+    <div class="background-skills-image header">
+        <h1>Skills</h1>
+    </div>
+    <div class="center glow big display-card">
+        <div>   
+            <h2>Skills</h2>
+            <p class="text-center">
+                The following are some of the skills, programming languages, and technologies 
+                that I've worked with over the past few years.
+            </p>
+        </div>
+        <div id="skills-card-container">
+            {% for skill in skills %}
+                <div class="glow skill-card">
+                    <h3 class="skill-title">{{ skill.name }}</h3>
+                    <p class="skill-description">{{ skill.description }}</p>
+                    <div class="icon-container small-icons">
+                        {% for svg in skill.icons %}
+                            {{ svg|safe }}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% include "contactCard.html" %}
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
+
