@@ -1,3 +1,4 @@
+from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, render_template, jsonify, request
 from getColors import run as getColors
 import regex as re
@@ -218,6 +219,25 @@ CONTACT_INFO = {
         },
     }
 }
+
+# -----------------------------
+#   Update the github account 
+#    and profile every hour 
+# -----------------------------
+def setRepos():
+    global REPOS
+    REPOS = getGithubRepos()
+    print("Updated repos")
+
+def setGithubAccount():
+    global GITHUB_ACCOUNT
+    GITHUB_ACCOUNT = getGithubAccount(REPOS)
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=setRepos, trigger="interval", hours=1)
+scheduler.add_job(func=setGithubAccount, trigger="interval", hours=1)
+scheduler.start()
+
 # GET: /
 @app.route("/", methods=["GET"])
 def home():
