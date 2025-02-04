@@ -5,13 +5,27 @@ import regex as re
 import requests
 import dotenv
 import copy
+import sys
 import os
 
 app = Flask(__name__)
-dotenv.load_dotenv()
+found = False
+for pos, arg in enumerate(sys.argv):
+    if arg == "--env":
+        dotenv.load_dotenv(sys.argv[pos + 1])
+        found = True
+
+if not found:
+    dotenv.load_dotenv("/var/www/portfolioSite.env")
+
 COLORS = getColors()
-GITHUB_API_KEY = os.getenv("GITHUB_API_KEY")
-WEB3FORMS_KEY = os.getenv("WEB3FORMS_KEY")
+try:
+    GITHUB_API_KEY = os.getenv("GITHUB_API_KEY")
+    WEB3FORMS_KEY = os.getenv("WEB3FORMS_KEY")
+except Exception as e:
+    print(f"Error loading environment variables {e}")
+    sys.exit(1)
+
 HEADERS = {
     "Authorization": f"Bearer {GITHUB_API_KEY}"
 }
@@ -141,6 +155,8 @@ def getGithubRepos(limit: int=-1) -> list[dict]:
             for repo in repos
         ]
     else:
+        print("Error getting Github repos at https://api.github.com/users/CommanderKV/repos")
+        print(response.json())
         return []
 
 def getSkills(limit: int=-1) -> list[dict]:

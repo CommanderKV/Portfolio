@@ -13,10 +13,10 @@
         <header>
             <nav id="head-container">
                 <div>
-                    <a class="logo" href="/">
+                    <a class="logo" href="{{ url_for('home') }}">
                         <img class="logo" src="/static/images/logo.png" alt="Logo">
                     </a>
-                    <a href="/">Home</a>
+                    <a href="{{ url_for('home') }}">Home</a>
                     <div class="dropdown">
                         <a class="dropdown-toggle">
                             About <span class="caret">▼</span>
@@ -46,7 +46,7 @@
             <ul>
                 <li>
                     <ul>
-                        <li><a href="/">Home</a></li>
+                        <li><a href="{{ url_for('home') }}">Home</a></li>
                         <li><a>About</a></li>
                         <li><a href="{{ url_for('projects') }}">Projects</a></li>
                     </ul>
