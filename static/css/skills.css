@@ -5,7 +5,7 @@
         rgba(0, 0, 0, 0),
         var(--primary-color)
     ), 
-    url("/static/images/skills-banner.jpg");
+    url("/static/images/skills-banner.webp");
     background-color: var(--primary-color);
     background-size: cover;
     background-position: center;

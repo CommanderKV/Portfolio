@@ -14,7 +14,7 @@
         <div>
             <div class="side-by-side">
                 <h2>Who am i?</h2>
-                <img class="profile-pic" src="/static/images/kyler-profile-pic.jpg" alt="Icon of kyler">
+                <img class="profile-pic" width="auto" height="auto" src="/static/images/kyler-profile-pic.webp" alt="Icon of kyler">
             </div>
             <p>
                 I am a computer science student who loves to create and try out
@@ -76,9 +76,6 @@
                         <a class="visit" href="{{ project.url }}" target="_blank">Visit</a>
                     </div>
                 {% endfor %}
-                <div class="glow github-card fake-card short">
-                    <a href="{{ url_for('projects') }}">See more projects</a>
-                </div>
                 <div class="glow github-card-profile small">
                     <div class="profile-header">
                         <img class="profile-pic" src="{{ account.avatar }}" alt="Kyler's GitHub profile picture">
@@ -104,6 +101,9 @@
                         </p>
                     </div>
                     <a class="visit center" href="{{ account.url }}" target="_blank">View profile</a>
+                </div>
+                <div class="glow github-card fake-card short">
+                    <a href="{{ url_for('projects') }}">See more projects</a>
                 </div>
             </div>
         </div>

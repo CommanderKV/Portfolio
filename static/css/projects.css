@@ -4,7 +4,7 @@
         rgba(0, 0, 0, 0),
         var(--primary-color)
     ), 
-    url("/static/images/programming-banner.png");
+    url("/static/images/programming-banner.webp");
     background-color: var(--primary-color);
     background-size: cover;
     background-position: center;
