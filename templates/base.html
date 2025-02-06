@@ -31,7 +31,7 @@
                 </div>
                 <div>
                     <a href="{{ url_for('contact') }}">Contact</a>
-                    <a>Login / Register</a>
+                    <a href="{{ url_for('login') }}">Login / Register</a>
                 </div>
             </nav>
         </header>
@@ -48,14 +48,14 @@
                 <li>
                     <ul>
                         <li><a href="{{ url_for('home') }}">Home</a></li>
-                        <li><a>About</a></li>
+                        <li><a href="{{ url_for('skills') }}">Skills</a></li>
                         <li><a href="{{ url_for('projects') }}">Projects</a></li>
                     </ul>
                 </li>
                 <li>
                     <ul>
                         <li><a href="{{ url_for('contact') }}">Contact</a></li>
-                        <li><a>Login / Register</a></li>
+                        <li><a href="{{ url_for('login') }}">Login / Register</a></li>
                     </ul>
                 </li>
             </ul>

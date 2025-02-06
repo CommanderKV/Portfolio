@@ -291,7 +291,14 @@ def skills():
         skills=getSkills(),
         contact=CONTACT_INFO
     )
-
+    
+# GET: /login
+@app.route("/login", methods=["GET"])
+def login():
+    return render_template(
+        "login.html",
+        contact=CONTACT_INFO
+    )
 # --------------
 #   Api routes
 # --------------

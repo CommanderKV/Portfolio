@@ -322,6 +322,14 @@ main {margin-bottom: 50px;}
 .text-center {
     text-align: center;
 }
+.in-development {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 2rem;
+    height: 100vh;
+}
 
 
 
