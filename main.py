@@ -8,7 +8,10 @@ import copy
 import sys
 import os
 
+# Make the app
 app = Flask(__name__)
+
+# Get the environment variables
 found = False
 for pos, arg in enumerate(sys.argv):
     if arg == "--env":
