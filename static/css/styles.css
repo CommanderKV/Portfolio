@@ -316,9 +316,88 @@ main {margin-bottom: 50px;}
     margin-top: 150px;
 }
 .skills {
-    width: 400px !important;
-    height: auto !important;
+    width: 400px;
+    height: auto;
 }
 .text-center {
     text-align: center;
+}
+
+
+
+/*
+* =================
+*   Display sizes 
+* =================
+*/
+
+/* Laptop L (1440px w)*/
+@media (max-width: 1600px) {
+    .display-card {
+        width: 50%;
+    }
+    .display-card > div > p {
+        font-size: 1.3rem;
+    }
+    .card-title {
+        font-size: 1.2rem;
+    }
+    .small-icons svg {
+        width: 40px;
+    }
+}
+/* Transition to Laptop (1400px 2) */
+@media (max-width: 1400px) {
+    .small-icons svg {
+        width: 30px;
+    }
+    .card-title {
+        font-size: 1.1rem;
+    }
+}
+
+/* Transition to Laptop (1300px w)*/
+@media (max-width: 1300px) {
+    .card-title {
+        font-size: 1rem;
+    }
+    .display-card > div > p{
+        font-size: 1.1rem;
+    }
+    .display-card > div:first-child {
+        min-width: unset;
+        width: 100%;
+    }
+}
+
+/* Transition to Laptop (1100px w)*/
+@media (max-width: 1100px) {
+    .display-card {
+        width: auto;
+    }
+    .display-card.left,
+    .display-card.right {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+    .display-card > div > p {
+        font-size: 1.5rem;
+    }
+    .card-title {
+        font-size: 1.3rem;
+    }
+    .small-icons svg {
+        width: 50px;
+    }
+}
+
+/* Transition to Tablet (900px 2)*/
+@media (max-width: 900px) {
+    #head-container a {
+        font-size: 1.2rem;
+        margin: 5px 3px;
+    }
+    .card-title {
+        font-size: 1.1rem;
+    }
 }

@@ -11,21 +11,6 @@
 }
 
 /* Github profile */
-.github-card-profile {
-    display: flex;
-    flex-direction: column;
-    
-    width: 290px;
-
-    background-color: var(--tertiary-color);
-
-    transition-duration: 0.2s, 0.3s;
-    transition-timing-function: ease-in-out;
-    transition-property: transform;
-}
-.github-card-profile:hover {
-    transform: scale(1.1);
-}
 .profile-header {
     display: flex;
     flex-direction: row;
@@ -76,7 +61,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     margin: 1rem;
     gap: 15px;
@@ -84,7 +69,7 @@
 .github-card {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
 
     width: 100%;
@@ -97,9 +82,10 @@
     transition-timing-function: ease-in-out;
     transition-property: transform;
 }
-.github-card.short,
-.github-card-profile.short,
-.github-card.fake-card.short {
+.github-card-profile {
+    padding: 0px;
+}
+.short {
     width: 225px;
     height: 200px;
 }
@@ -256,3 +242,57 @@
     border-radius: 10px;
     border: 2px solid var(--accent-color);
 }
+
+/*
+* =================
+*   Display sizes 
+* =================
+*/
+
+/* Laptop L (1440px w)*/
+@media (max-width: 1600px) {
+    .github-card,
+    .github-card.fake-card {
+        width: 30%;
+    }
+    .github-card.fake-card a {
+        font-size: 1.3rem;
+    }
+    .short {
+        width: 225px;
+        height: auto;
+    }
+}
+
+/* Transition to Laptop (1300px w)*/
+@media (max-width: 1300px) {
+    .github-card.fake-card a {
+        font-size: 1.1rem;
+    }
+}
+
+/* Transition to Laptop (1100px w)*/
+@media (max-width: 1100px) {
+    .github-card.fake-card a {
+        font-size: 1.6rem;
+    }
+}
+
+/* Transition to Tablet (900px w)*/
+@media (max-width: 900px) {
+    .github-card.fake-card a {
+        font-size: 1.3rem;
+    }
+    .short {
+        width: 200px;
+        height: auto;
+    }
+    .profile-name h3 {
+        font-size: 1rem;
+    }
+    .profile-name p,
+    .profile-details p {
+        font-size: 0.9rem;
+    }
+}
+
