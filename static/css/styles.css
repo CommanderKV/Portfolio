@@ -368,6 +368,13 @@ main {margin-bottom: 50px;}
         min-width: unset;
         width: 100%;
     }
+    .display-card:nth-child(3) {
+        width: auto;
+    }
+    .display-card.right {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
 }
 
 /* Transition to Laptop (1100px w)*/
@@ -375,8 +382,7 @@ main {margin-bottom: 50px;}
     .display-card {
         width: auto;
     }
-    .display-card.left,
-    .display-card.right {
+    .display-card.left{
         margin-left: 50px;
         margin-right: 50px;
     }

@@ -265,14 +265,7 @@
 }
 
 /* Transition to Laptop (1300px w)*/
-@media (max-width: 1300px) {
-    .github-card.fake-card a {
-        font-size: 1.1rem;
-    }
-}
-
-/* Transition to Laptop (1100px w)*/
-@media (max-width: 1100px) {
+@media (max-width: 1330px) {
     .github-card.fake-card a {
         font-size: 1.6rem;
     }
