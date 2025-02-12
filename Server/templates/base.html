@@ -14,24 +14,24 @@
         <header>
             <nav id="head-container">
                 <div>
-                    <a class="logo" href="{{ url_for('home') }}">
+                    <a class="logo" href="{{ url_for('main.home') }}">
                         <img class="logo" width="auto" height="auto" src="/static/images/logo.webp" alt="Logo">
                     </a>
-                    <a href="{{ url_for('home') }}">Home</a>
+                    <a href="{{ url_for('main.home') }}">Home</a>
                     <div class="dropdown">
                         <a class="dropdown-toggle">
                             About <span class="caret">▼</span>
                         </a>
                         <div class="dropdown-menu glow">
-                            <a href="{{ url_for('skills') }}">Skills</a>
+                            <a href="{{ url_for('main.skills') }}">Skills</a>
                             <!-- <a>Resume</a> -->
                         </div>
                     </div>
-                    <a href="{{ url_for('projects') }}">Projects</a>
+                    <a href="{{ url_for('main.projects') }}">Projects</a>
                 </div>
                 <div>
-                    <a href="{{ url_for('contact') }}">Contact</a>
-                    <a href="{{ url_for('login') }}">Login / Register</a>
+                    <a href="{{ url_for('main.contact') }}">Contact</a>
+                    <a href="{{ url_for('login.login') }}">Login / Register</a>
                 </div>
             </nav>
         </header>
@@ -47,15 +47,15 @@
             <ul>
                 <li>
                     <ul>
-                        <li><a href="{{ url_for('home') }}">Home</a></li>
-                        <li><a href="{{ url_for('skills') }}">Skills</a></li>
-                        <li><a href="{{ url_for('projects') }}">Projects</a></li>
+                        <li><a href="{{ url_for('main.home') }}">Home</a></li>
+                        <li><a href="{{ url_for('main.skills') }}">Skills</a></li>
+                        <li><a href="{{ url_for('main.projects') }}">Projects</a></li>
                     </ul>
                 </li>
                 <li>
                     <ul>
-                        <li><a href="{{ url_for('contact') }}">Contact</a></li>
-                        <li><a href="{{ url_for('login') }}">Login / Register</a></li>
+                        <li><a href="{{ url_for('main.contact') }}">Contact</a></li>
+                        <li><a href="{{ url_for('login.login') }}">Login / Register</a></li>
                     </ul>
                 </li>
             </ul>

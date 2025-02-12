@@ -4,6 +4,7 @@
 #                 of all the programming languages on GitHub.
 #
 #     I have modified the code to return the json instead of writing it.
+#             I have also added logging to the code with logfire.
 # ---------------------------------------------------------------------------
 import json
 import requests
@@ -14,10 +15,10 @@ try:
 except ImportError:
     from urllib.parse import quote
 from collections import OrderedDict
-from datetime import datetime
+import logfire
 
-
-def ordered_load(stream, Loader=yaml.Loader, object_pairs_hook=OrderedDict):
+@logfire.instrument("Creating yaml stream of colors", extract_args=False)
+def ordered_load(stream: str|bool, Loader: yaml.Loader=yaml.Loader, object_pairs_hook: OrderedDict=OrderedDict) -> any:
     """
     Parse the first YAML document in a stream
     and produce the corresponding Python Orderered Dictionary.
@@ -27,21 +28,21 @@ def ordered_load(stream, Loader=yaml.Loader, object_pairs_hook=OrderedDict):
     OrderedLoader.add_constructor(
         yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
         lambda loader, node: object_pairs_hook(loader.construct_pairs(node)))
-
+    
     return yaml.load(stream, OrderedLoader)
 
 
-def order_by_keys(dict):
+def order_by_keys(dict: dict) -> OrderedDict:
     """
     Sort a dictionary by keys, case insensitive ie [ Ada, eC, Fortran ]
     Default ordering, or using json.dump with sort_keys=True, produces
     [ Ada, Fortran, eC ]
     """
-    from collections import OrderedDict
+    logfire.info("Sorting dictionary by keys")
     return OrderedDict(sorted(dict.items(), key=lambda s: s[0].lower()))
 
-
-def get_file(url):
+@logfire.instrument("Getting file from URL")
+def get_file(url: str) -> str | bool:
     """
     Return the URL body, or False if page not found
 
@@ -50,21 +51,25 @@ def get_file(url):
     """
     try:
         r = requests.get(url)
-    except:
-        sys.exit("Request fatal error :  %s" % sys.exc_info()[1])
+    except requests.exceptions.RequestException as error:
+        logfire.fatal(f"Request fatal error: {error}")
+        sys.exit(1)
 
     if r.status_code != 200:
+        logfire.error(f"Request error page not found. Response code: {r.status_code}")
         return False
 
+    logfire.info("Request successful")
     return r.text
 
-def is_dark(color):
+def is_dark(color: str) -> bool:
     l = 0.2126 * int(color[0:2], 16) + 0.7152 * int(color[2:4], 16) + 0.0722 * int(color[4:6], 16)
     return False if l / 255 > 0.65 else True
 
+@logfire.instrument("Getting colors of all programming languages on GitHub")
 def run():
     # Get list of all langs
-    print("Getting list of languages ...")
+    logfire.info("Getting colors")
     yml = get_file("https://raw.githubusercontent.com/github/linguist/master/"
                    "lib/linguist/languages.yml")
     langs_yml = ordered_load(yml)
@@ -72,10 +77,11 @@ def run():
 
     # List construction done, count keys
     lang_count = len(langs_yml)
-    print("Found %d languages" % lang_count)
+    logfire.info("Found %d languages" % lang_count)
 
     # Construct the wanted list
     langs = OrderedDict()
+    logfire.info("Creating dictionary of colors")
     for lang in langs_yml.keys():
         if ("type" not in langs_yml[lang] or
                 "color" in langs_yml[lang] or
@@ -85,5 +91,5 @@ def run():
             langs[lang]["url"] = "https://github.com/trending?l=" + (langs_yml[lang]["search_term"] if "search_term" in langs_yml[lang] else lang)
             langs[lang]["url"] = langs[lang]["url"].replace(' ','-').replace('#','sharp')
     
-    print("Processed %d languages" % len(langs))
+    logfire.info(f"Processed {len(langs)} languages")
     return langs
