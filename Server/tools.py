@@ -1,6 +1,7 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from . import HEADERS, COLORS, WEB3FORMS_KEY
 from urllib.parse import urlencode
+from .models.User import Users
 from flask import *
 import requests
 import logfire
@@ -8,13 +9,20 @@ import copy
 import os
 
 @logfire.instrument("Getting github code")
-def getGithubCode() -> str | None:
+def getGithubCode() -> str | bool:
     """
-    Returns the url to redirect the user to for authorization
+    Returns the url to redirect the user to for 
+    authorization or True if the user is logged in 
+    and the user exists otherwise it returns False
     """
     if session.get("oauthToken"):
-        logfire.info("User already logged in", oauth=session.__dict__)
-        return None
+        if Users.query.filter_by(githubOAuthToken=session["oauthToken"]).first():
+            logfire.info("User already logged in", session=session.__dict__)
+            return True
+        else:
+            logfire.info("User not found in database. Logging out", session=session.__dict__)
+            session.clear()
+            return False
     
     else:
         logfire.info("User not logged in. Redirecting to github for authorization")

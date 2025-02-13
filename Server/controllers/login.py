@@ -12,8 +12,11 @@ def login():
     url = tools.getGithubCode()
     
     # User is logged in
-    if url is None:
+    if url == True:
         return redirect(url_for("dashboard.home"))
+    
+    elif url == False:
+        return login()
     
     return redirect(url)
 
