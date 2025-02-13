@@ -1,10 +1,118 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from . import HEADERS, COLORS, WEB3FORMS_KEY
+from urllib.parse import urlencode
+from flask import *
 import requests
 import logfire
 import copy
+import os
 
-# Get the Github account details
+@logfire.instrument("Getting github code")
+def getGithubCode() -> str | None:
+    """
+    Returns the url to redirect the user to for authorization
+    """
+    if session.get("oauthToken"):
+        logfire.info("User already logged in", oauth=session.__dict__)
+        return None
+    
+    else:
+        logfire.info("User not logged in. Redirecting to github for authorization")
+        params = {
+            "client_id": os.getenv("GITHUB_CLIENT_ID"),
+            "scope": "read:user,user:email"
+        }
+        url = "https://github.com/login/oauth/authorize?"
+        url += urlencode(params)
+        return url
+
+@logfire.instrument("Getting github access token")
+def getGithubAuthToken(args: dict[str, str]) -> str | None:
+    # Check if the code is in the args
+    if "code" not in args:
+        logfire.error("Authorization failed code not in args", request=args)
+        return None
+    
+    # Set code
+    code = args.get("code")
+    logfire.debug("Exchanging code for access token", code=code)
+    
+    # Get the access token
+    params = {
+        "code": code,
+        "client_id": os.getenv("GITHUB_CLIENT_ID"),
+        "client_secret": os.getenv("GITHUB_CLIENT_SECRET")
+    }
+    url = "https://github.com/login/oauth/access_token"
+    response = requests.request(
+        "POST",
+        url,
+        data=urlencode(params),
+        headers={"Accept": "application/json"}
+    )
+    
+    if response.status_code != 200:
+        logfire.error("Failed to get access token", response=response.json())
+        return None
+    
+    oauthToken = response.json()
+    if "access_token" not in oauthToken:
+        logfire.error(f"Failed to get access token", response=oauthToken)
+        return None
+
+    oauthToken = oauthToken["access_token"]
+    logfire.info("returning auth token", oauthToken=oauthToken)
+    return oauthToken
+
+@logfire.instrument("Getting user details from github")
+def getUserDetails(authToken) -> dict[str, str] | None:
+    # Get the username and name from github
+    url = "https://api.github.com/user"
+    logfire.debug("Sending request to get user details", url=url)
+    response = requests.get(
+        url,
+        headers={
+            "Authorization": f"Bearer {authToken}"
+        }   
+    )
+
+    if response.status_code != 200:
+        logfire.error("Failed to get user details returning None", response=response.json())
+        return None
+    
+    data = response.json()
+    logfire.debug("Data retrieved for name and username", data=data)
+    
+    logfire.debug("Filtering data")
+    returnData = {
+        "name": data["name"],
+        "username": data["login"],
+        "avatar": data["avatar_url"],
+    }
+    
+    # Get the users email from github
+    url = "https://api.github.com/user/emails"
+    logfire.info("Getting users email", url=url)
+    response = requests.get(
+        url,
+        headers={
+            "Authorization": f"Bearer {authToken}"
+        }
+    )
+    
+    if response.status_code != 200:
+        logfire.error("Failed to get user email returning None", response=response.json())
+        return None
+    
+    emails = response.json()
+    logfire.info("Emails retrieved", emails=emails)
+    
+    returnData["email"] = next((email["email"] for email in emails if email["primary"]), None)
+    logfire.info("Returning user details", data=returnData)
+    return returnData
+
+
+# Get the Github account details for the website
 @logfire.instrument("Getting Github account details", extract_args=False)
 def getGithubAccount(repositories: list[dict]=[]) -> dict:
     # Duplicate the repositories
@@ -85,7 +193,7 @@ def getGithubAccount(repositories: list[dict]=[]) -> dict:
             "languages": "Not available"
         }
 
-# Get the Github repositories
+# Get the Github repositories for the website
 @logfire.instrument("Getting Github repositories")
 def getGithubRepos(limit: int=-1) -> list[dict]:
     # Get the github language makeup 

@@ -48,10 +48,6 @@ def create_app():
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
-    
-    app.config["GITHUB_CLIENT_ID"] = os.getenv("GITHUB_CLIENT_ID")
-    app.config["GITHUB_CLIENT_SECRET"] = os.getenv("GITHUB_CLIENT_SECRET")
-    github = GitHub(app)
 
     # -------------------
     #   Database config
@@ -59,8 +55,9 @@ def create_app():
     db.init_app(app)
 
     from . import main
-    from .controllers import login
+    from .controllers import login, dashboard
     app.register_blueprint(main.app)
     app.register_blueprint(login.app)
+    app.register_blueprint(dashboard.app)
     
     return app
