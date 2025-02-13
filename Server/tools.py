@@ -198,7 +198,6 @@ def getGithubAccount(repositories: list[dict]=[]) -> dict:
 def getGithubRepos(limit: int=-1) -> list[dict]:
     # Get the github language makeup 
     # percentage and color for a repo
-    @logfire.instrument("Getting Github repo language makeup")
     def getRepoLanguageMakeup(url: str) -> dict:
         response = requests.get(
             url,
@@ -221,10 +220,10 @@ def getGithubRepos(limit: int=-1) -> list[dict]:
                     "color": COLORS[key]["color"] if key in COLORS else "#000000"
                 }
             
-            logfire.info("Returning repo language makeup")
+            logfire.debug("Returning repo language makeup", url=url, languageMakeup=result)
             return result
         else:
-            logfire.notice(
+            logfire.warn(
                 "Error getting repo language makeup", 
                 url=url, 
                 response=response
@@ -245,19 +244,22 @@ def getGithubRepos(limit: int=-1) -> list[dict]:
         repos = repos[:limit] if limit > 0 else repos
         
         # Return the required data
+        with logfire.span("Getting github repo language makeup"):
+            data =  [
+                {
+                    "name": repo["name"],
+                    "description": repo["description"] or "No description available",
+                    "stars": repo["stargazers_count"],
+                    "forks": repo["forks"],
+                    "language": repo["language"] or "Unknown",
+                    "languages": getRepoLanguageMakeup(repo["languages_url"]),
+                    "url": repo["html_url"]
+                }
+                for repo in repos
+            ]
+            
         logfire.info("Returning Github repos")
-        return [
-            {
-                "name": repo["name"],
-                "description": repo["description"] or "No description available",
-                "stars": repo["stargazers_count"],
-                "forks": repo["forks"],
-                "language": repo["language"] or "Unknown",
-                "languages": getRepoLanguageMakeup(repo["languages_url"]),
-                "url": repo["html_url"]
-            }
-            for repo in repos
-        ]
+        return data
     
     # Return an empty list since there was an error getting the repos
     else:
@@ -315,7 +317,7 @@ def getSkills(limit: int=-1) -> list[dict]:
         }
     ]
     
-    logfire.info("Returning skills.")
+    logfire.debug("Returning skills.")
     return skills[:limit] if limit > 0 else skills
 
 # Send an email to the web3forms API
@@ -330,7 +332,7 @@ def sendEmail(name: str, email: str, body: str) -> bool:
             "message": body
         }
 
-        logfire.info(
+        logfire.debug(
             "Sending email via web3forms API",
             url=url, 
             request=requestBody
