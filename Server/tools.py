@@ -8,6 +8,18 @@ import logfire
 import copy
 import os
 
+@logfire.instrument("Getting geo data")
+def getGeoData(ip: str): 
+    url = "http://ip-api.com/json/" + ip
+    logfire.debug("Sending request to get geo data", url=url)
+    response = requests.get(url)
+    if response.status_code == 200:
+        logfire.debug("Returning", data=response.json())
+        return response.json()
+    else:
+        logfire.debug("Failed to get data")
+        return None
+
 @logfire.instrument("Getting github code")
 def getGithubCode() -> str | bool:
     """

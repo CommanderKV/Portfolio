@@ -71,7 +71,7 @@ def authorized():
 @logfire.instrument("GET /logout")
 def logout():
     if session.get("userId"):
-        session.pop("userId", None)
+        session.clear()
         logfire.info("User logged out successfully")
     else:
         logfire.info("No user was logged in")

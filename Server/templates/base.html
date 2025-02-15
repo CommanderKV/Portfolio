@@ -12,6 +12,7 @@
     </head>
     <body>
         <header>
+            {% block header %}
             <nav id="head-container">
                 <div>
                     <a class="logo" href="{{ url_for('main.home') }}">
@@ -31,9 +32,9 @@
                 </div>
                 <div>
                     <a href="{{ url_for('main.contact') }}">Contact</a>
-                    <a href="{{ url_for('login.login') }}">Login / Register</a>
                 </div>
             </nav>
+            {% endblock %}
         </header>
         <main>
             {% block content %}
@@ -49,13 +50,12 @@
                     <ul>
                         <li><a href="{{ url_for('main.home') }}">Home</a></li>
                         <li><a href="{{ url_for('main.skills') }}">Skills</a></li>
-                        <li><a href="{{ url_for('main.projects') }}">Projects</a></li>
                     </ul>
                 </li>
                 <li>
                     <ul>
+                        <li><a href="{{ url_for('main.projects') }}">Projects</a></li>
                         <li><a href="{{ url_for('main.contact') }}">Contact</a></li>
-                        <li><a href="{{ url_for('login.login') }}">Login / Register</a></li>
                     </ul>
                 </li>
             </ul>
@@ -63,6 +63,7 @@
         </footer>
         <script src="/static/js/base.js"></script>
         <script src="/static/js/contactScript.js"></script>
+        <script src="/static/js/location.js"></script>
         {% block scripts %}{% endblock %}
     </body>
 </html>

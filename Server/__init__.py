@@ -1,6 +1,6 @@
+from logging import FileHandler, WARNING
 from flask_sqlalchemy import SQLAlchemy
 from .getColors import run as getColors
-from flask_github import GitHub
 from datetime import timedelta
 from flask import Flask
 import logfire
@@ -43,6 +43,11 @@ def create_app():
     global db, github
     
     app = Flask(__name__)
+    
+    # Logging errors
+    #file_handler = FileHandler("error.log")
+    #file_handler.setLevel(WARNING)
+    
     app.secret_key = os.getenv("FLASK_SECRET_KEY")
     app.permanent_session_lifetime = timedelta(days=7)
 
