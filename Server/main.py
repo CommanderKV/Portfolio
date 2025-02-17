@@ -67,21 +67,11 @@ def projects():
         contact=CONTACT_INFO
     )
 
-# GET: /contact
-@app.route("/contact", methods=["GET"])
-@logfire.instrument("GET /contact")
-def contact():
-    logfire.debug("Rendering contact page")
-    return render_template(
-        "contact.html", 
-        contact=CONTACT_INFO
-    )
-
-# GET: /skills
-@app.route("/skills", methods=["GET"])
-@logfire.instrument("GET /skills")
-def skills():
-    logfire.debug("Rendering skills page")
+# GET: /about
+@app.route("/about", methods=["GET"])
+@logfire.instrument("GET /about")
+def about():
+    logfire.debug("Rendering about page")
     return render_template(
         "skills.html",
         skills=getSkills(),

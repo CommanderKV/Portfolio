@@ -237,7 +237,8 @@ def getGithubRepos(limit: int=-1) -> list[dict]:
             for key in data:
                 result[key] = {
                     "percent": round((data[key] / total) * 100, 1),
-                    "color": COLORS[key]["color"] if key in COLORS else "#000000"
+                    "color": COLORS[key]["color"] if key in COLORS else "#000000",
+                    "svg": COLORS[key]["svg"] if key in COLORS else ""
                 }
             
             logfire.debug("Returning repo language makeup", url=url, languageMakeup=result)
@@ -267,18 +268,16 @@ def getGithubRepos(limit: int=-1) -> list[dict]:
         with logfire.span("Getting github repo language makeup"):
             data =  [
                 {
-                    "name": repo["name"],
+                    "title": repo["name"],
                     "description": repo["description"] or "No description available",
-                    "stars": repo["stargazers_count"],
-                    "forks": repo["forks"],
-                    "language": repo["language"] or "Unknown",
                     "languages": getRepoLanguageMakeup(repo["languages_url"]),
-                    "url": repo["html_url"]
+                    "url": repo["html_url"],
+                    "imageUrl": "/static/images/github.png"
                 }
                 for repo in repos
             ]
             
-        logfire.info("Returning Github repos")
+        logfire.info("Returning Github repos", repos=data)
         return data
     
     # Return an empty list since there was an error getting the repos
