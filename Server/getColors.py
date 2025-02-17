@@ -160,7 +160,7 @@ def run():
             langs[lang]["color"] = langs_yml[lang]["color"] if "color" in langs_yml[lang] else None
             langs[lang]["url"] = "https://github.com/trending?l=" + (langs_yml[lang]["search_term"] if "search_term" in langs_yml[lang] else lang)
             langs[lang]["url"] = langs[lang]["url"].replace(' ','-').replace('#','sharp')
-            langs[lang]["svg"] = SVGS[lang.lower()] if lang.lower() in SVGS.keys() else None
+            langs[lang]["svg"] = SVGS[lang.lower()] if lang.lower() in SVGS.keys() else ""
     
     logfire.info(f"Processed {len(langs)} languages")
     return langs

@@ -73,7 +73,7 @@ def projects():
 def about():
     logfire.debug("Rendering about page")
     return render_template(
-        "skills.html",
+        "about.html",
         skills=getSkills(),
         contact=CONTACT_INFO
     )

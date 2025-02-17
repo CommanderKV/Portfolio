@@ -235,10 +235,15 @@ def getGithubRepos(limit: int=-1) -> list[dict]:
             total = sum(data.values())
             result = {}
             for key in data:
+                if key in COLORS:
+                    if COLORS[key]["svg"] == "" or COLORS[key]["svg"] == None:
+                        svg = None
+                    else:
+                        svg = COLORS[key]["svg"]
                 result[key] = {
                     "percent": round((data[key] / total) * 100, 1),
                     "color": COLORS[key]["color"] if key in COLORS else "#000000",
-                    "svg": COLORS[key]["svg"] if key in COLORS else ""
+                    "svg": svg
                 }
             
             logfire.debug("Returning repo language makeup", url=url, languageMakeup=result)
