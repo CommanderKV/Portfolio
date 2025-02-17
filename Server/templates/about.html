@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}About Kyler{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="/static/css/about.css">
+{% endblock %}
+
+{% block content %}
+    <div id="about">
+        <h2><span class="orange">About</span> Me</h2>
+        <p>
+            I'm Kyler, a <span class="orange">second-year</span> Computer Science student at Lakehead-Georgian (LUGC) 
+            with <span class="orange">6 years of programming experience</span>. I'm passionate about creating Software 
+            that simplifies everyday life and enjoy building web interfaces to make my solutions widely accessible. I'm 
+            always eager to learn new technologies and <span class="orange">I'm currently seeking a 4-month co-op opportunity</span>.
+        </p>
+    </div>
+    <div id="experience-container">
+        <div id="experience" class="border-1 fill-primary">
+            <div class="fill-secondary border-1 experience-nav">
+                <h2 id="education-btn" class="active">Education</h2>
+                <h2 id="work-btn">Work</h2>
+            </div>
+            <div id="education">
+                <div class="experience-card border-1 fill-secondary">
+                    <div>
+                        <h3 class="orange">SATEC @ W.A. Porter C.I.</h3>
+                        <p class="text-fade">(2019 - 2023)</p>
+                    </div>
+                    <div>
+                        <p>
+                            Specialized in <span class="orange">Computer Science</span> 
+                            with the following <span class="orange">accomplishments</span>:
+                        </p>
+                        <ol>
+                            <li>Honours graduate<span class="text-fade">(80%+)</span></li>
+                            <li>Co-operative education award</li>
+                            <li>Completed ICT SHSM</li>
+                            <li>President, Comp. Sci Club<span class="text-fade">(1 year)</span></li>
+                            <li>President, Stage Crew<span class="text-fade">(3 years)</span></li>
+                        </ol>
+                    </div>
+                </div>
+                <div></div>
+                <div></div>
+                <div class="experience-card border-1 fill-secondary">
+                    <div>
+                        <h3 class="orange">Lakehead-Georgian</h3>
+                        <p class="text-fade">(2023 - Present)</p>
+                    </div>
+                    <div>
+                        <p>Pursuing B.Sc. in <span class="orange">Computer Science</span></p>
+                        <ol>
+                            <li>Current GPA: <span class="green">3.9/4.0</span></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div id="work" class="in-active">
+                <div class="experience-card border-1 fill-secondary">
+                    <div>
+                        <h3 class="orange">Freelance Web Developer</h3>
+                        <p class="text-fade">(2020 - Present)</p>
+                    </div>
+                    <div>
+                        <p>
+                            I've worked on a variety of projects, including:
+                        </p>
+                        <ol>
+                            <li>Personal websites</li>
+                            <li>Small business websites</li>
+                            <li>Web applications</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/about.js"></script>
+{% endblock %}
+

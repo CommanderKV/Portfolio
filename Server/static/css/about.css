@@ -1,0 +1,82 @@
+.experience-nav .active {background-color: var(--tertiary-color);}
+#experience-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#experience {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    width: 60%;
+}
+#experience > div:first-child {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 0px;
+    width: 80%;
+}
+#experience > div:first-child > * {
+    width: 100%;
+    padding: 5px 0px;
+    text-align: center;
+    border-radius: var(--regular-border-radius);
+}
+#experience > div:first-child > *:first-child {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-right-color: var(--border-orange);
+    border-right-style: solid;
+    border-right-width: 1px;
+}
+#experience > div:first-child > *:last-child {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+#experience > div:not(:first-child) {
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+#experience > div:not(:first-child) *:nth-child(odd) {
+    grid-column: 1;
+}
+#experience > div:not(:first-child) *:nth-child(even) {
+    grid-column: 2;
+}
+
+.experience-card {
+    grid-column: span 2;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0px;
+    width: -webkit-fill-available;
+    padding: 20px;
+}
+.experience-card > div:first-child > h3 {
+    font-size: 1.6rem;
+}
+.experience-card > div:first-child > p {
+    font-size: 1.3rem;
+}
+.experience-card > div:last-child > p,
+.experience-card > div:last-child > ol > li {
+    font-size: 1.1rem;
+}
+.experience-card ol {
+    margin: 0px;
+    list-style-type: disc;
+}
+.in-active {display: none !important;}

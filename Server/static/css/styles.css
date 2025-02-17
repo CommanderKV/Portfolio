@@ -289,8 +289,9 @@ header {
     height: inherit;
     margin-left: 20px;
 }
-.project-langs > svg {
+.project-langs > * {
     margin-left: -15px;
+    height: inherit;
 }
 .project-cta > div.border-1 {
     display: flex;
