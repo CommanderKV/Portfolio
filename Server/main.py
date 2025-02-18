@@ -95,31 +95,23 @@ def api():
 def apiContact():
     # Get data from the request
     data: dict = request.json
-    errors = {}
+    errors = []
     logfire.debug("Received contact form data", data=data)
-    
-    # Validating name data
-    if not data.get("name"):
-        errors["name"] = "Name is required"
-        logfire.warn("Name is required")
-    elif len(data.get("name")) < 3:
-        errors["name"] = "Must be at least 3 characters"
-        logfire.warn("Name must be at least 3 characters")
     
     # Validating email data
     if not data.get("email"):
-        errors["email"] = "Email is required"
+        errors.append("Email is required")
         logfire.warn("Email is required")
     elif not re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", data.get("email")):
-        errors["email"] = "Invalid email format"
+        errors.append("Invalid email format")
         logfire.warn("Invalid email format")
     
     # Validating message data
     if not data.get("message"):
-        errors["message"] = "Message is required"
+        errors.append("Message is required")
         logfire.warn("Message is required")
     elif len(data.get("message")) < 10:
-        errors["message"] = "Must be at least 10 characters"
+        errors.append("Message must be at least 10 characters")
         logfire.warn("Message must be at least 10 characters")
         
     # If there are errors then return them with a status code of 400
@@ -129,13 +121,12 @@ def apiContact():
     
     # Send email
     if sendEmail(
-        name=data.get("name"),
         email=data.get("email"),
         body=data.get("message")
     ):
         # Message was sent successfully
         logfire.info("Message sent successfully")
-        return jsonify({"success": True, "message": "Message sent successfully!"})
+        return jsonify({"success": True, "message": "Message sent successfully!"}), 200
     
     else:
         # Message failed to send

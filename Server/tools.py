@@ -346,13 +346,13 @@ def getSkills(limit: int=-1) -> list[dict]:
 
 # Send an email to the web3forms API
 @logfire.instrument("Sending email")
-def sendEmail(name: str, email: str, body: str) -> bool:
+def sendEmail(email: str, body: str) -> bool:
     try:
         url = "https://api.web3forms.com/submit"
         requestBody = {
             "access_key": WEB3FORMS_KEY,
             "email": email,
-            "subject": f"Portfolio contact attempt by {name}",
+            "subject": f"Portfolio contact attempt by {email}",
             "message": body
         }
 
