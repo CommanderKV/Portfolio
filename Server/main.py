@@ -11,7 +11,7 @@ app = Blueprint("main", __name__)
 startBackgroundScheduler()
 
 # Geo location data by ip when the post request is made
-@app.route("/geo", methods=["POST"])
+@app.before_request()
 def geoLocation():
     if request.environ.get("HTTP_X_FORWARDED_FOR"):
         ip = request.environ.get("HTTP_X_FORWARDED_FOR")
@@ -19,6 +19,7 @@ def geoLocation():
         ip = request.remote_addr
     else:
         logfire.warn("Could not determine the IP address of the request")
+        return
 
     with logfire.span(f"Request from IP: {ip}", request=request.__dict__):
         if "geoData" in session.keys():
@@ -28,18 +29,9 @@ def geoLocation():
         geoData = getGeoData(ip)
         
         logfire.debug("Saving geo data to session")
-        data = request.get_json()
-        session["geoData"] = {
-            "geoData": geoData,
-            "siteData": {
-                "latitude": data.get("latitude"),
-                "longitude": data.get("longitude")
-            }
-        }
+        session["geoData"] = geoData
         
         logfire.info("Obtained geo data", data=session.get("geoData"))
-    
-    return jsonify({"msg": "Geo data obtained"})
 
 
 # GET: /
