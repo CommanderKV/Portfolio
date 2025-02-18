@@ -88,3 +88,40 @@
     list-style-type: disc;
 }
 .in-active {display: none !important;}
+
+/* Media Queries */
+@media (max-width: 900px) {
+    #projects-page > div:first-child > h1 {
+        font-size: 3rem;
+    }
+    #projects-page > div:first-child > p {
+        font-size: 1.7rem;
+    }
+}
+@media (max-width: 600px) {
+    #projects-page > div:first-child > h1 {
+        font-size: 2.5rem;
+    }
+    #projects-page > div:first-child > p {
+        font-size: 1.5rem;
+    }
+}
+@media (max-width: 500px) {
+    #projects-page > div:first-child > h1 {
+        font-size: 2rem;
+    }
+    #projects-page > div:first-child > p {
+        font-size: 1.25rem;
+    }
+}
+@media (max-width: 425px) {
+    #projects-page {
+        gap: 30px;
+    }
+    #projects-page > div:first-child > h1 {
+        font-size: 1.5rem;
+    }
+    #projects-page > div:first-child > p {
+        font-size: 1rem;
+    }
+}
