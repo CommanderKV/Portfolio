@@ -28,6 +28,14 @@
     padding: 5px 0px;
     text-align: center;
     border-radius: var(--regular-border-radius);
+
+    cursor: pointer;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.15s;
+    transition-property: transform;
+}
+#experience > div:first-child > *:hover {
+    transform: scale(1.1);
 }
 #experience > div:first-child > *:first-child {
     border-top-right-radius: 0px;

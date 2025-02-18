@@ -12,7 +12,6 @@
     align-items: center;
     gap: 60px;
     width: 100%;
-    padding: 20px;
 }
 #projects-page > div:first-child {
     display: flex;
