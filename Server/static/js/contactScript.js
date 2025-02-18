@@ -8,14 +8,13 @@ document.getElementById("contact-form").addEventListener("submit", function(even
 
     // Get form data
     let formData = {
-        name: document.getElementById("contact-name").value.trim(),
-        email: document.getElementById("contact-email").value.trim(),
-        message: document.getElementById("contact-message").value.trim()
+        email: document.getElementById("email").value.trim(),
+        message: document.getElementById("message").value.trim()
     };
 
     // Clear previous errors
     document.querySelectorAll(".error").forEach(el => el.innerText = "");
-    document.getElementById("form-message").innerText = "";
+    document.getElementById("error-msg").innerText = "";
 
     fetch("/api/contact", {
         method: "POST",
@@ -27,15 +26,12 @@ document.getElementById("contact-form").addEventListener("submit", function(even
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            document.getElementById("form-message").innerText = data.message;
-            document.getElementById("form-message").style.color = "var(--success-color)";
+            document.getElementById("error-msg").innerText = data.message;
+            document.getElementById("error-msg").style.color = "var(--success-color)";
             document.getElementById("contact-form").reset();  // Reset form on success
         } else {
-            document.getElementById("form-message").innerText = "Please fix the errors before submitting.";
-            document.getElementById("form-message").style.color = "var(--danger-color)";
-            for (let field in data.errors) {
-                document.getElementById(field + "-error").innerText = data.errors[field];
-            }
+            document.getElementById("error-msg").innerText = data.errors[0];
+            document.getElementById("error-msg").style.color = "var(--danger-color)";
         }
     })
     .catch(error => console.error("Error:", error));
