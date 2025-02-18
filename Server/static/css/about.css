@@ -50,7 +50,7 @@
 }
 
 #experience > div:not(:first-child) {
-    width: 80%;
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
@@ -89,3 +89,69 @@
 }
 .in-active {display: none !important;}
 
+@media (max-width: 1024px) {
+    #experience {
+        width: 90%;
+    }
+}
+@media (max-width: 768px) {
+    #experience > div:first-child {
+        flex-direction: column;
+        width: 100%;
+    }
+    #experience > div:first-child > *:hover {
+        transform: none;
+    }
+    #experience > div:first-child > *:first-child {
+        border-bottom-left-radius: 0px;
+        border-top-right-radius: var(--regular-border-radius);
+    }
+    #experience > div:first-child > *:last-child {
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: var(--regular-border-radius);
+    }
+    #experience > div:not(:first-child) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+    #experience > div:not(:first-child) > div {
+        display: none;
+    }
+    #experience > div:not(:first-child) > div.experience-card {
+        display: flex;
+    }
+}
+@media (max-width: 425px) {
+    #experience {
+        width: 80%;
+    }
+    #experience > div:first-child > * {
+        font-size: 1.25rem;
+    }
+    .experience-card > div:first-child > h3 {
+        font-size: 1.2rem;
+    }
+    .experience-card > div:first-child > p {
+        font-size: 1.1rem;
+    }
+    .experience-card > div:last-child > p {
+        font-size: 1.05rem;
+    }
+    .experience-card > div:last-child > ol > li {
+        font-size: 1rem;
+    }
+}
+@media (max-width: 375px) {
+    .experience-card > div:first-child > p {
+        font-size: 1rem;
+    } 
+    .experience-card > div:last-child > p {
+        font-size: 0.9rem;
+    }
+    .experience-card > div:last-child > ol > li {
+        font-size: 0.8rem;
+    }
+}
