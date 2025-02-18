@@ -15,6 +15,9 @@
     --text-color: #FFFFFF;
     --text-fade: #959396cf;
 
+    --success-color: #00FF00;
+    --danger-color: #FF0000;
+
     --glow-margin: 1rem;
     --regular-border-radius: 20px;
 }
@@ -25,8 +28,10 @@ html {
     font-family: "Buenard", sans-serif;
     scroll-behavior: smooth;
 }
+header {width: 100%;}
 body,
 main {
+    margin: 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -95,6 +100,7 @@ header {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    width: -webkit-fill-available;
     gap: 15px;
 }
 #head-container > a {
@@ -111,6 +117,16 @@ header {
 #head-container > a > p {
     margin: 0px;
     padding: 0px;
+}
+#nav-toggle {
+    display: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    background-color: var(--background-color);
+    width: -webkit-fill-available;
+    height: 100%;
+    text-align: center;
 }
 #nav-links {
     display: flex;
@@ -351,6 +367,9 @@ header {
 .tech-card:hover {
     transform: scale(1.1);
 }
+a.tech-card {
+    cursor: pointer;
+}
 .tech-card h3 {
     font-size: 1.6rem;
 }
@@ -360,7 +379,7 @@ header {
 
 /* Homepage's about me */
 #about {
-    width: 50%;
+    width: 60%;
 }
 #about > h2 {
     font-size: 3rem;
@@ -409,6 +428,7 @@ header {
     padding: 5px 15px;
     height: 25px;
     border: none;
+    color: var(--text-color);
     border-radius: var(--regular-border-radius);
 }
 #contact-form > div > textarea {
@@ -417,6 +437,7 @@ header {
     padding: 5px 15px;
     border: none;
     resize: none;
+    color: var(--text-color);
     border-radius: var(--regular-border-radius);
 }
 #contact-form > button {
@@ -424,6 +445,14 @@ header {
     width: -webkit-fill-available;
     padding: 10px 20px;
     font-size: 1.5rem;
+
+    cursor: pointer;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-in-out;
+    transition-property: transform;
+}
+#contact-form > button:hover {
+    transform: scale(1.04);
 }
 #contact-form label,
 #contact-form input,
@@ -445,6 +474,7 @@ header {
     align-items: center;
     gap: 20px;
     height: 100%;
+    padding: 20px;
 }
 #extra-contact > div > div {
     display: flex;
@@ -453,8 +483,351 @@ header {
     width: 60%;
 }
 #extra-contact h3 {
-    margin-top: 20px;
     text-align: center;
 }
 
+/* Width resizing */
+@media (max-width: 1230px) {
+    #title {
+        margin-right: 25%;
+    }
+    .project-cta {
+        height: 35px;
+    }
+    #about {
+        width: 70%;
+    }
+    #extra-contact {
+        width: 70%;
+    }
+}
+@media (max-width: 1024px) {
+    #title {
+        margin-right: 30%;
+    }
+    #about {
+        width: 80%;
+    }
+    #contact-footer > div {
+        width: 90%;
+    }
+}
+@media (max-width: 950px) {
+    #projects > div:last-child {
+        height: auto;
+        flex-direction: column;
+    }
+    #technologies > div {
+        grid-template-columns: repeat(2, minmax(200px, 1fr));
+    }
+    #contact-footer > div {
+        flex-direction: column;
+    }
+    #extra-contact {
+        flex-direction: row;
+        width: 100%;
+    }
+    #extra-contact > div {
+        width: -webkit-fill-available;
+        height: 150px;
+    }
+    #extra-contact > div > div {
+        width: 100%;
+    }
+}
+@media (max-width: 768px) {
+    #title {
+        margin-right: 0px;
+    }
+}
+@media (max-width: 700px) {
+    #nav-links > a{
+        font-size: 1.2rem;
+    }
+    #head-container > a {
+        font-size: 1.1rem;
+    }
 
+    #title > div:first-child > h1 {
+        font-size: 3.5rem;
+    }
+    #title > div:first-child > p {
+        font-size: 1.3rem;
+    }
+    #projects > div:first-child > h2 {
+        font-size: 2.5rem;
+    }
+    #projects > div:first-child > p {
+        font-size: 1.5rem;
+    }
+
+    #technologies > h2 {
+        font-size: 2.5rem;
+    }
+
+    #about > h2 {
+        font-size: 2.5rem;
+    }
+    #about > p {
+        font-size: 1.3rem;
+    }
+
+    #contact-title > h1 {
+        font-size: 2.5rem;
+    }
+    #contact-title > p,
+    #contact-form label,
+    #contact-form input,
+    #contact-form textarea,
+    #contact-form > button {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 500px) {
+    /* Make navbar into a dropdown */
+    header {
+        top: 0px;
+    }
+    #nav-links {
+        flex-direction: column;
+        max-height: 0;
+        overflow: hidden;
+    }
+    #nav-links a {
+        padding: 10px;
+        text-align: center;
+    }
+    #nav-toggle {
+        display: block;
+    }
+    #head-container {
+        width: -webkit-fill-available;
+        gap: 0px;
+    }
+    #head-container.dropdown #nav-links {
+        max-height: 300px;
+        width: 100%;
+        gap: 0px;
+    }
+    #head-container.dropdown #nav-links a {
+        width: 100%;
+        height: 100%;
+        border-color: transparent;
+        border-radius: 0;
+    }
+    #head-container > a{
+        margin-top: 15px;
+    }
+
+    #title > div:first-child > h1 {
+        font-size: 3rem;
+    }
+    #title > div:first-child > p {
+        font-size: 1.2rem;
+    }
+    #title-cta > a:last-child {
+        font-size: 1.2rem;
+    }
+
+    .project-card {
+        width: 80%;
+    }
+    .project-card > div > h3 {
+        font-size: 1.2rem;
+    }
+    .project-card > div > p {
+        font-size: 1rem;
+    }
+    #projects > div:first-child > h2 {
+        font-size: 2rem;
+    }
+    #projects > div:first-child > p {
+        font-size: 1.25rem;
+    }
+
+    #technologies > div {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    #technologies {
+        gap: 15px;
+    }
+    #technologies > h2 {
+        font-size: 2rem;
+    }
+
+    #about > h2 {
+        font-size: 2rem;
+    }
+    #about > p {
+        font-size: 1.1rem;
+    }
+
+    #contact-title > h1 {
+        font-size: 2rem;
+    }
+    #contact-title > p,
+    #contact-form label,
+    #contact-form input,
+    #contact-form textarea,
+    #contact-form > button {
+        font-size: 1.1rem;
+    }
+    #extra-contact {
+        flex-direction: column;
+    }
+    #extra-contact > div > div {
+        width: 80%;
+    }
+}
+
+@media (max-width: 425px) {
+    main {
+        gap: 150px;
+    }
+
+    #head-container > a {
+        font-size: 1rem;
+    }
+
+    #title {
+        width: 80%;
+    }
+    #title-cta {
+        gap: 15px;
+    }
+    #title-cta > a > svg {
+        height: 35px;
+    }
+    #title-cta > a:last-child {
+        font-size: 1.1rem;
+    }
+    #title > div:first-child > h1 {
+        font-size: 2.5rem;
+    }
+    #title > div:first-child > p {
+        font-size: 1.2rem;
+    }
+
+
+    #projects > div:first-child > h2 {
+        font-size: 1.7rem;
+    }
+    #projects > div:first-child > p {
+        font-size: 1.15rem;
+    }
+    .project-card {
+        gap: 15px;
+    }
+    .project-cta {
+        height: 30px;
+    }
+
+    #technologies > h2 {
+        font-size: 1.7rem;
+    }
+    .tech-card h3 {
+        font-size: 1.4rem;
+    }
+
+    #about > h2 {
+        font-size: 1.7rem;
+    }
+    #about > p {
+        font-size: 1rem;
+    }
+
+    #contact-title > h1 {
+        font-size: 1.7rem;
+    }
+    #contact-title > p,
+    #contact-form label,
+    #contact-form input,
+    #contact-form textarea,
+    #contact-form > button {
+        font-size: 1rem;
+    }
+    #extra-contact > div {
+        height: 125px;
+    }
+    #extra-contact > div > div {
+        height: 50px;
+    }
+}
+
+@media (max-width: 375px) {
+    main {
+        gap: 125px;
+    }
+
+    #head-container > a {
+        font-size: 0.8rem;
+    }
+
+    #title {
+        gap: 10px;
+    }
+    #title-cta {
+        flex-wrap: wrap;
+    }
+    #title-cta > a:last-child {
+        font-size: 1.1rem;
+    }
+    #title > div:first-child > h1 {
+        font-size: 2.3rem;
+    }
+    #title > div:first-child > p {
+        font-size: 1.1rem;
+    }
+    #title > p {
+        font-size: 1rem;
+    }
+
+    #projects > div:first-child > h2 {
+        font-size: 1.5rem;
+    }
+    .project-card > img {
+        max-height: 150px;
+    }
+
+    #technologies > h2 {
+        font-size: 1.5rem;
+    }
+    .tech-card h3 {
+        font-size: 1.3rem;
+    }
+
+    #about > h2 {
+        font-size: 1.5rem;
+    }
+    #about > p {
+        font-size: 1rem;
+    }
+
+    #contact-footer {
+        width: 90%;
+    }
+    #contact-title > h1 {
+        font-size: 1.5rem;
+    }
+    #contact-title > p,
+    #contact-form label,
+    #contact-form input,
+    #contact-form textarea,
+    #contact-form > button {
+        font-size: 1rem;
+    }
+    #contact-form > div > label {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    #extra-contact > div {
+        height: 100px;
+        gap: 5px;
+    }
+    #extra-contact > div > div {
+        height: 45px;
+    }
+}
