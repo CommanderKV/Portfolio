@@ -611,7 +611,7 @@ a.tech-card {
         gap: 0px;
     }
     #head-container.dropdown #nav-links a {
-        width: 100%;
+        width: -webkit-fill-available;
         height: 100%;
         border-color: transparent;
         border-radius: 0;
@@ -663,6 +663,9 @@ a.tech-card {
         font-size: 1.1rem;
     }
 
+    #contact-footer {
+        scroll-margin-top: 150px;
+    }
     #contact-title > h1 {
         font-size: 2rem;
     }
