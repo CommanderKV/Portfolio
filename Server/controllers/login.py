@@ -55,15 +55,16 @@ def authorized():
     user: Users = Users.query.filter_by(email=userData["email"]).first()
     if user is None:
         logfire.debug("User not found, creating new user", token=oauthToken)
-        user = Users(githubOAuthToken=oauthToken)
+        user = Users(
+            githubOAuthToken=oauthToken,
+            userName=userData["username"],
+            name=userData["name"],
+            email=userData["email"]
+        )
         db.session.add(user)
         
-        user.userName = userData["username"]
-        user.name = userData["name"]
-        user.email = userData["email"]
-        
     # Update the user's token
-    user.githubOAuthToken = oauthToken
+    user.updateToken(oauthToken)
     db.session.commit()
     logfire.debug("User updated", user=user)
     
