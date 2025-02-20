@@ -17,4 +17,6 @@ def loginCheck():
 @app.route("/")
 @logfire.instrument("GET /dashboard/")
 def home():
-    return render_template("base.html", header="")
+    username = session.get("userName")
+    logfire.debug(f"Rendering {username}'s dashboard")
+    return render_template("dashboard/home.html", username=username)
