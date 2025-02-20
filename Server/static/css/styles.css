@@ -64,22 +64,27 @@ h1, h2, h3, h4, p {
     margin: 0px;
     padding: 0px;
 }
-
-.border-1 {
+.border-1, 
+.border-2,
+.border-3 {
     border-radius: var(--regular-border-radius);
-    border-color: var(--border-orange);
-    border-width: 1px;
     border-style: solid;
 }
+.border-1 {
+    border-color: var(--border-orange);
+    border-width: 1px;
+}
 .border-2 {
-    border-radius: var(--regular-border-radius);
     border-color: var(--orange);
     border-width: 2px;
-    border-style: solid;
+}
+.border-3 {
+    border-color: var(--border-orange);
+    border-width: 3px;
 }
 .green {color: var(--green);}
 .orange {color: var(--orange);}
-.text-fade {color: var(--text-fade)}
+.text-fade {color: var(--text-fade);}
 .const-color {color: var(--const-color);}
 .fill-primary {background-color: var(--primary-color);}
 .fill-secondary {background-color: var(--secondary-color);}
@@ -309,7 +314,7 @@ header {
     margin-left: -15px;
     height: inherit;
 }
-.project-cta > div.border-1 {
+.project-cta > a {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -324,10 +329,10 @@ header {
     transition-timing-function: ease-in-out;
     transition-property: transform;
 }
-.project-cta > div.border-1:hover {
+.project-cta > a:hover {
     transform: scale(1.05);
 }
-.project-cta > div.border-1 > p {
+.project-cta > a > p {
     width: auto;
     word-wrap: break-word;
 }
