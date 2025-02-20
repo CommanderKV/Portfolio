@@ -76,7 +76,11 @@
         </header>
         <main>
             {% block content %}
-                <h1><span class="red">404</span> Page not found</h1>
+                {% if error is defined %}
+                    <h1>Encountered error <span class="red">{{ error }}</span></h1>
+                {% else %}
+                    <h1><span class="red">404</span> Page not found</h1>
+                {% endif %}
             {% endblock %}
             {% if disableContact is not defined %}
                 <section id="contact-footer" class="center">
