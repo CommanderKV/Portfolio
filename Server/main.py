@@ -59,6 +59,31 @@ def projects():
         contact=CONTACT_INFO
     )
 
+# GET: /projects/<repoName>
+@app.route("/projects/<repoName>", methods=["GET"])
+@logfire.instrument("GET /projects/<repoName>")
+def projectDetails(repoName):
+    # Get the details for the repository
+    logfire.debug(f"Getting details for \"{repoName}\" repository", repoName=repoName)
+    repo = None
+    for repository in REPOS:
+        if repository["title"] == repoName:
+            repo = repository
+            break
+    
+    # Repo was not found return a 404
+    if repo is None:
+        logfire.warn("Repository not found", repoName=repoName)
+        return abort(404)
+    
+    # Render the project template
+    logfire.debug("Rendering project details page")
+    return render_template(
+        "projectDetails.html",
+        repo=repo,
+        contact=CONTACT_INFO
+    )
+
 # GET: /about
 @app.route("/about", methods=["GET"])
 @logfire.instrument("GET /about")
