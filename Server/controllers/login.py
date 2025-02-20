@@ -6,19 +6,33 @@ import logfire
 app = Blueprint("login", __name__)
 
 
-@app.route("/login")
+@app.route("/login", methods=["GET"])
 @logfire.instrument("GET /login")
 def login():
-    url = tools.getGithubCode()
+    method = request.args.get("method")
+    # /login?method=github
+    if method == "github":
+        url = tools.getGithubCode()
+        
+        # User is logged in
+        if url is True:
+            return redirect(url_for("dashboard.home"))
+        
+        elif url is False:
+            return redirect(url_for("login.login"), code=302)
+        
+        return redirect(url)
     
-    # User is logged in
-    if url == True:
-        return redirect(url_for("dashboard.home"))
+    # /login?method=asdadd (invalid method)
+    elif method is not None:
+        logfire.warn("Invalid login method {method}", method=method)
+        flash("Invalid login method", "error")
+        return redirect(url_for("login.login"), code=302)
     
-    elif url == False:
-        return login()
-    
-    return redirect(url)
+    # /login
+    else:
+        logfire.debug("Rendering login page")
+        return render_template("login.html", disableHeader=True, disableContact=True)
 
 @app.route("/github-callback")
 @logfire.instrument("GET /github-callback")

@@ -82,6 +82,7 @@ h1, h2, h3, h4, p {
     border-color: var(--border-orange);
     border-width: 3px;
 }
+.red {color: var(--danger-color)}
 .green {color: var(--green);}
 .orange {color: var(--orange);}
 .text-fade {color: var(--text-fade);}
@@ -155,6 +156,28 @@ header {
     color: var(--background-color);
     background-color: var(--orange);
     transform: scale(1.1);
+}
+
+#flash-messages {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: -webkit-fill-available;
+    padding: 10px;
+}
+#flash-messages .flash-message {
+    width: fit-content;
+    border-radius: 100px;
+    background-color: var(--primary-color);
+}
+#flash-messages .flash-message p {
+    margin: 0px;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 5px 10px;
+    color: var(--danger-color);
 }
 
 #title {

@@ -46,28 +46,39 @@
     </head>
     <body>
         <header>
-            {% block header %}
-            <nav id="head-container">
-                <div id="nav-toggle">&#9776; Menu</div>
-                <div id="nav-links">
-                    <a class="border-2" href="{{ url_for('main.home') }}">Home</a>
-                    <a class="border-2" href="{{ url_for('main.about') }}">About</a>
-                    <a class="border-2" href="{{ url_for('main.projects') }}">Projects</a>
-                    <a class="border-2" href="#contact-footer">Contact</a>
-                </div>
-                {% block currentlyLookingFor %}
-                    <a class="border-2" href="#contact-footer">
-                        <p class="green">Currently seeking a 4-month Co-op/Internship</p>
-                    </a>
-                {% endblock %}
-            </nav>
-            {% endblock %}
+            {% if disableHeader is not defined %}
+                <nav id="head-container">
+                    <div id="nav-toggle">&#9776; Menu</div>
+                    <div id="nav-links">
+                        <a class="border-2" href="{{ url_for('main.home') }}">Home</a>
+                        <a class="border-2" href="{{ url_for('main.about') }}">About</a>
+                        <a class="border-2" href="{{ url_for('main.projects') }}">Projects</a>
+                        <a class="border-2" href="#contact-footer">Contact</a>
+                    </div>
+                    {% block currentlyLookingFor %}
+                        <a class="border-2" href="#contact-footer">
+                            <p class="green">Currently seeking a 4-month Co-op/Internship</p>
+                        </a>
+                    {% endblock %}
+                </nav>
+            {% endif %}
+            <div id="flash-messages">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for msg in messages %}
+                        <div class="flash-message border-1">
+                            <p>{{ msg }}</p>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
         </header>
         <main>
             {% block content %}
-            <h1>404 Page not found</h1>
+                <h1><span class="red">404</span> Page not found</h1>
             {% endblock %}
-            {% if showContact is not defined %}
+            {% if disableContact is not defined %}
                 <section id="contact-footer" class="center">
                     <div>
                         <div id="contact" class="border-1 fill-primary">
@@ -129,8 +140,12 @@
         <footer>
             <p class="text-fade">&copy 2025 Kyler Visser</p>
         </footer>
-        <script src="/static/js/base.js" defer></script>
-        <script src="/static/js/contactScript.js" defer></script>
+        {% if disableHeader is not defined %}
+            <script src="/static/js/base.js" defer></script>
+        {% endif %}
+        {% if disableContact is not defined %}
+            <script src="/static/js/contactScript.js" defer></script>
+        {% endif %}
         {% block scripts %}{% endblock %}
     </body>
 </html>
