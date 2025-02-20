@@ -274,10 +274,13 @@ def getGithubRepos(limit: int=-1) -> list[dict]:
             data =  [
                 {
                     "title": repo["name"],
+                    "fullTitle": repo["full_name"],
                     "description": repo["description"] or "No description available",
                     "languages": getRepoLanguageMakeup(repo["languages_url"]),
                     "url": repo["html_url"],
-                    "imageUrl": "/static/images/github.png"
+                    "updatedAt": repo["updated_at"],
+                    "archived": repo["archived"],
+                    "imageUrls": ["/static/images/github.png"]
                 }
                 for repo in repos
             ]
