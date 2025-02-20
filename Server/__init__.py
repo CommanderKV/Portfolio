@@ -2,7 +2,7 @@ from logging import FileHandler, WARNING
 from flask_sqlalchemy import SQLAlchemy
 from .getColors import run as getColors
 from datetime import timedelta
-from flask import Flask
+from flask import Flask, render_template
 import logfire
 import sys
 import os
@@ -58,11 +58,39 @@ def create_app():
     #   Database config
     # -------------------
     db.init_app(app)
+    
+    # Check for roles
+    from .models.Role import Roles
+    roles = Roles.query.all()
+    if not roles:
+        db.create_all()
+        db.session.add(Roles("admin"))
+        db.session.add(Roles("user"))
+        db.session.commit()
+    
+    if Roles("admin") not in roles:
+        db.session.add(Roles("admin"))
+        db.session.commit()
+    
+    if Roles("user") not in roles:
+        db.session.add(Roles("user"))
+        db.session.commit()
 
+    # ----------------------------------
+    #   Setup the controllers / routes
+    # ----------------------------------
     from . import main
     from .controllers import login, dashboard
     app.register_blueprint(main.app)
     app.register_blueprint(login.app)
     app.register_blueprint(dashboard.app)
+    
+    @app.errorhandler(404)
+    def not_found_error(error):
+        return render_template("base.html", disableHeader=True, disableContact=True), 404
+
+    # @app.errorhandler(500)
+    # def internal_error(error):
+    #     return render_template("base.html", disableHeader=True, disableContact=True), 500
     
     return app

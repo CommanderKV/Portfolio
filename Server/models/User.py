@@ -8,9 +8,15 @@ class Users(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=True)
     githubOAuthToken = db.Column(db.String(100), unique=True, nullable=False)
     
+    roleId = db.Column(db.Integer, db.ForeignKey("roles.id"), default=2)
+    role = db.relationship("Roles", back_populates="users")
+    
     def __init__(self, githubOAuthToken: str, userName: str=None, name: str=None, email: str=None):
         self.githubOAuthToken = githubOAuthToken
         self.userName = userName
         self.name = name
         self.email = email
+        self.roleId = 2
 
+    def updateToken(self, token: str):
+        self.githubOAuthToken = token
