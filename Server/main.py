@@ -30,7 +30,13 @@ def geoLocation():
                     data = []
                     for ip in ip.split(", "):
                         logfire.debug(f"Getting geo data for IP: {ip}")
-                        data.append(getGeoData(ip))
+                        geoData = getGeoData(ip)
+                        
+                        if geoData["status"] == "fail":
+                            logfire.warn("Failed to get geo data", geoData=geoData)
+                            continue
+                        
+                        data.append(geoData)
                     
                     logfire.debug("Saving geo data to session")
                     session["geoData"] = data
@@ -38,6 +44,10 @@ def geoLocation():
                 else:
                     logfire.debug(f"Getting geo data for IP: {ip}")
                     geoData = getGeoData(ip)
+                    
+                    if geoData["status"] == "fail":
+                        logfire.warn("Failed to get geo data", geoData=geoData)
+                        return
                     
                     logfire.debug("Saving geo data to session")
                     session["geoData"] = geoData
