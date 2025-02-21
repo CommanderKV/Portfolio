@@ -304,7 +304,7 @@ header {
 }
 .project-card > div:nth-child(2) {
     max-width: 350px;
-    height: 100%;
+    height: auto;
     cursor: pointer;
 }
 .project-card > img {
@@ -660,6 +660,9 @@ a.tech-card {
 
     .project-card {
         width: 80%;
+    }
+    .project-card > img {
+        width: 100%;
     }
     .project-card > div > h3 {
         font-size: 1.2rem;

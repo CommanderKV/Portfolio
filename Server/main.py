@@ -21,15 +21,26 @@ def geoLocation():
         ip = None
         logfire.warn("Could not determine the IP address of the request")
 
-    with logfire.span(f"Request from IP: {ip}", request=request.__dict__):
+    with logfire.span(f"Request from IP(s): {ip}", request=request.__dict__):
         if "geoData" in session.keys():
             logfire.debug("Using cached geo data", geoData=session.get("geoData"))
         else:
             if ip is not None:
-                geoData = getGeoData(ip)
+                if "," in ip:
+                    data = []
+                    for ip in ip.split(", "):
+                        logfire.debug(f"Getting geo data for IP: {ip}")
+                        data.append(getGeoData(ip))
+                    
+                    logfire.debug("Saving geo data to session")
+                    session["geoData"] = data
                 
-                logfire.debug("Saving geo data to session")
-                session["geoData"] = geoData
+                else:
+                    logfire.debug(f"Getting geo data for IP: {ip}")
+                    geoData = getGeoData(ip)
+                    
+                    logfire.debug("Saving geo data to session")
+                    session["geoData"] = geoData
                 
                 logfire.info("Obtained geo data", data=session.get("geoData"))
 
