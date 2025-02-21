@@ -43,7 +43,6 @@ def home():
         "home.html", 
         projects=REPOS[:3], 
         account=GITHUB_ACCOUNT,
-        skills=getSkills(3),
         contact=CONTACT_INFO
     )
 
@@ -91,7 +90,6 @@ def about():
     logfire.debug("Rendering about page")
     return render_template(
         "about.html",
-        skills=getSkills(),
         contact=CONTACT_INFO
     )
 
