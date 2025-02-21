@@ -140,7 +140,7 @@ def getImages() -> dict[str, list[str]]:
     
     # Get the current path
     currentPath = os.path.dirname(os.path.abspath(__file__))
-    currentPath += "\\static\\images"
+    currentPath += "/static/images"
     logfire.debug("Current path", path=currentPath)
     
     # Find all the images in the directory
@@ -299,7 +299,7 @@ def getGithubRepos(limit: int=-1) -> list[dict]:
         # Get the images of all the repos
         images = getImages()
         path = os.path.dirname(os.path.abspath(__file__))
-        path += "\\static\\images"
+        path += "/static/images"
         
         # Return the required data
         with logfire.span("Getting github repo language makeup"):
@@ -310,9 +310,9 @@ def getGithubRepos(limit: int=-1) -> list[dict]:
                     "description": repo["description"] or "No description available",
                     "languages": getRepoLanguageMakeup(repo["languages_url"]),
                     "url": repo["html_url"],
-                    "updatedAt": repo["updated_at"],
+                    "updatedAt": repo["updated_at"][:10],
                     "archived": repo["archived"],
-                    "imageUrls": images.get(path + "\\" + repo["name"], ["/static/images/github.png"])
+                    "imageUrls": images.get(path + "/" + repo["name"], ["/static/images/github.png"])
                 }
                 for repo in repos
             ]
