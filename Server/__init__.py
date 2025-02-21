@@ -59,22 +59,26 @@ def create_app():
     # -------------------
     db.init_app(app)
     
-    # Check for roles
-    from .models.Role import Roles
-    roles = Roles.query.all()
-    if not roles:
+    # Create tables if they don't exist
+    with app.app_context():
+        from .models.Role import Roles
+        from .models.User import Users
         db.create_all()
-        db.session.add(Roles("admin"))
-        db.session.add(Roles("user"))
-        db.session.commit()
     
-    if Roles("admin") not in roles:
-        db.session.add(Roles("admin"))
-        db.session.commit()
-    
-    if Roles("user") not in roles:
-        db.session.add(Roles("user"))
-        db.session.commit()
+        # Check for roles
+        roles = Roles.query.all()
+        if not roles:
+            db.session.add(Roles("admin"))
+            db.session.add(Roles("user"))
+            db.session.commit()
+        
+        if not any(role.name == "admin" for role in roles):
+            db.session.add(Roles("admin"))
+            db.session.commit()
+        
+        if not any(role.name == "user" for role in roles):
+            db.session.add(Roles("user"))
+            db.session.commit()
 
     # ----------------------------------
     #   Setup the controllers / routes
