@@ -309,7 +309,7 @@ header {
 }
 .project-card > img {
     max-height: 200px;
-    height: -webkit-fill-available;
+    height: auto;
     width: auto;
     overflow: auto;
     margin: 0px auto;
