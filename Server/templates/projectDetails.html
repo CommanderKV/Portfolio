@@ -29,12 +29,16 @@
             </ul>
         </div>
         <div id="screenshots">
-            <h2>Screenshots</h2>
-            <div id="images">
-                {% for imageUrl in repo.imageUrls %}
-                    <img class="border-3" src="{{ imageUrl }}" alt="{{ repo.title }} screenshot">
-                {% endfor %}
-            </div>
+            {% if repo.imageUrls[0] != "/static/images/github.png" %}
+                <h2>Screenshots</h2>
+                <div id="images">
+                    {% for imageUrl in repo.imageUrls %}
+                        <img src="{{ imageUrl }}" alt="{{ repo.title }} screenshot">
+                    {% endfor %}
+                </div>
+            {% else %}
+                <h2>No screenshots are available</h2>
+            {% endif %}
         </div>
         <a class="border-1" href="{{ repo.url }}" target="_blank">
             <svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">

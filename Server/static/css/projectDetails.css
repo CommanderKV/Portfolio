@@ -1,7 +1,7 @@
 #repo-details {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 20px;
     padding: 20px;
     width: auto;
@@ -14,6 +14,7 @@
 #repo-title p {
     font-size: 1.5rem;
     color: var(--text-fade);
+    text-align: center;
 }
 
 #repo-details a {
@@ -41,11 +42,15 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     gap: 15px;
+
+    width: 50%;
 }
 #screenshots h2 {
     font-size: 2rem;
+    width: max-content;
 }
 
 #images {
@@ -58,6 +63,8 @@
 #images img {
     display: none;
     border-radius: var(--regular-border-radius);
+    width: 100%;
+    height: auto;
 }
 #images img.active {
     display: block;
@@ -112,4 +119,59 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+    #repo-title h1 {
+        font-size: 2rem;
+    }
+    #repo-title p {
+        font-size: 1rem;
+    }
+    #repo-details > div:nth-child(2) {
+        width: 90%;
+    }
+    #screenshots {
+        width: 80%;
+    }
+    #screenshots h2 {
+        font-size: 1.25rem;
+    }
+}
+@media (max-width: 500px) {
+    #repo-title h1 {
+        font-size: 1.5rem;
+    }
+    #repo-title p {
+        font-size: 0.8rem;
+    }
+    #screenshots {
+        width: 90%;
+    }
+    #screenshots h2 {
+        font-size: 1.5rem;
+    }
+    .language-item {
+        font-size: 0.8rem;
+    }
+    #repo-details > a > p {
+        font-size: 0.9rem;
+    }
+}
+@media (max-width: 375px) {
+    #repo-title h1 {
+        font-size: 1.25rem;
+    }
+    #repo-title p {
+        font-size: 0.7rem;
+    }
+    #screenshots h2 {
+        font-size: 1.25rem;
+    }
+    .language-item {
+        font-size: 0.7rem;
+    }
+    #repo-details > a > p {
+        font-size: 0.8rem;
+    }
 }
