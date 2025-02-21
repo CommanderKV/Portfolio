@@ -57,7 +57,6 @@ def geoLocation():
 
 # GET: /
 @app.route("/", methods=["GET"])
-@logfire.instrument("GET /")
 def home():
     logfire.debug("Rendering home page")
     return render_template(
@@ -69,7 +68,6 @@ def home():
 
 # GET: /projects
 @app.route("/projects", methods=["GET"])
-@logfire.instrument("GET /projects")
 def projects():
     logfire.debug("Rendering projects page")
     return render_template(
@@ -81,7 +79,6 @@ def projects():
 
 # GET: /projects/<repoName>
 @app.route("/projects/<repoName>", methods=["GET"])
-@logfire.instrument("GET /projects/<repoName>")
 def projectDetails(repoName):
     # Get the details for the repository
     logfire.debug(f"Getting details for \"{repoName}\" repository", repoName=repoName)
@@ -106,7 +103,6 @@ def projectDetails(repoName):
 
 # GET: /about
 @app.route("/about", methods=["GET"])
-@logfire.instrument("GET /about")
 def about():
     logfire.debug("Rendering about page")
     return render_template(
@@ -119,7 +115,6 @@ def about():
 # --------------
 # GET: /api
 @app.route("/api", methods=["GET"])
-@logfire.instrument("GET /api")
 def api():
     data = {"message": "Hello, World!"}
     logfire.info("Returning API data", data=data)
@@ -127,7 +122,6 @@ def api():
 
 # POST: /contact
 @app.route("/api/contact", methods=["POST"])
-@logfire.instrument("POST /api/contact")
 def apiContact():
     # Get data from the request
     data: dict = request.json

@@ -15,7 +15,6 @@ def loginCheck():
     return None
 
 @app.route("/")
-@logfire.instrument("GET /dashboard/")
 def home():
     username = session.get("userName")
     logfire.debug(f"Rendering {username}'s dashboard")

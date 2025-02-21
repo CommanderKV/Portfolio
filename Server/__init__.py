@@ -53,6 +53,8 @@ def create_app():
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+    
+    logfire.instrument_flask(app, exclude_urls="/static/*")
 
     # -------------------
     #   Database config

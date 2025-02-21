@@ -7,7 +7,6 @@ app = Blueprint("login", __name__)
 
 
 @app.route("/login", methods=["GET"])
-@logfire.instrument("GET /login")
 def login():
     method = request.args.get("method")
     # /login?method=github
@@ -35,7 +34,6 @@ def login():
         return render_template("login.html", disableHeader=True, disableContact=True)
 
 @app.route("/github-callback")
-@logfire.instrument("GET /github-callback")
 def authorized():
     oauthToken = tools.getGithubAuthToken(request.args)
 
@@ -83,7 +81,6 @@ def authorized():
     return redirect(url_for("dashboard.home"))
 
 @app.route("/logout")
-@logfire.instrument("GET /logout")
 def logout():
     if session.get("userId"):
         session.clear()
