@@ -10,6 +10,7 @@
     <div id="repo-details">
         <div id="repo-title">
             <h1 class="orange">{{ repo.title }}</h1>
+            <p class="text-fade">Updated on: {{ repo.updatedAt }} | Archived: {{ repo.archived }}</p>
             <p>{{ repo.description }}</p>
         </div>
         <div>
@@ -50,5 +51,7 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="/static/js/projectDetails.js" defer></script>
+    {% if repo.imageUrls[0] != "/static/images/github.png" %}
+        <script src="/static/js/projectDetails.js" defer></script>
+    {% endif %}
 {% endblock %}
