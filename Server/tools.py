@@ -1,5 +1,5 @@
 from apscheduler.schedulers.background import BackgroundScheduler
-from . import HEADERS, COLORS, WEB3FORMS_KEY
+from . import HEADERS, COLORS
 from urllib.parse import urlencode
 from .models.User import Users
 from flask import *
@@ -329,38 +329,6 @@ def getGithubRepos(limit: int=-1) -> list[dict]:
         )
         return []
 
-# Send an email to the web3forms API
-@logfire.instrument("Sending email")
-def sendEmail(email: str, body: str) -> bool:
-    try:
-        url = "https://api.web3forms.com/submit"
-        requestBody = {
-            "access_key": WEB3FORMS_KEY,
-            "email": email,
-            "subject": f"Portfolio contact attempt by {email}",
-            "message": body
-        }
-
-        logfire.debug(
-            "Sending email via web3forms API",
-            url=url, 
-            request=requestBody
-        )
-        response = requests.post(
-            url=url,
-            json=requestBody
-        )
-        
-        if response.status_code == 200:
-            logfire.info("Email sent successfully")
-            return True
-        else:
-            logfire.error(f"Error sending email. Response code: {response.status_code}", response=response.json())
-            return False
-        
-    except Exception as e:
-        logfire.error(f"Error sending email: {e}")
-        return False
 
 # -----------------------------
 #   Update the github account 

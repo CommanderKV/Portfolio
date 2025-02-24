@@ -13,9 +13,8 @@ import os
 
 # Check for the github api key
 GITHUB_API_KEY = os.getenv("GITHUB_API_KEY")
-WEB3FORMS_KEY = os.getenv("WEB3FORMS_KEY")
 
-if not GITHUB_API_KEY or not WEB3FORMS_KEY:
+if not GITHUB_API_KEY:
     print("Missing required environment variables.")
     logfire.fatal("Missing required environment variables.")
     sys.exit(1)
