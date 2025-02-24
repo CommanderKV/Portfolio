@@ -355,7 +355,7 @@ def sendEmail(email: str, body: str) -> bool:
             logfire.info("Email sent successfully")
             return True
         else:
-            logfire.error(f"Error sending email. Response code: {response.status_code}", response=response)
+            logfire.error(f"Error sending email. Response code: {response.status_code}", response=response.json())
             return False
         
     except Exception as e:

@@ -1,8 +1,10 @@
 from .. import db
+import uuid
 
 class Users(db.Model):
     __tablename__ = "users"
     id = db.Column("id", db.Integer, primary_key=True)
+    uid = db.Column(db.String(36), unique=True, nullable=False)
     name = db.Column(db.String(100), nullable=True)
     userName = db.Column(db.String(100), nullable=True)
     email = db.Column(db.String(100), unique=True, nullable=True)
@@ -17,6 +19,7 @@ class Users(db.Model):
         self.name = name
         self.email = email
         self.roleId = 2
+        self.uid = str(uuid.uuid4())
 
     def updateToken(self, token: str):
         self.githubOAuthToken = token

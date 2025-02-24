@@ -66,13 +66,11 @@ def authorized():
     db.session.commit()
     logfire.debug("User updated", user=user)
     
-    session["oauthToken"] = oauthToken
-    session["userId"] = user.id
+    session["userId"] = user.uid
     session["userName"] = user.userName
     session.permanent = True
     logfire.debug(
         "Saved user identifiers to session", 
-        oauthToken=session.get("oauthToken"), 
         userId=session.get("userId"), 
         userName=session.get("userName")
     )
@@ -83,7 +81,8 @@ def authorized():
 @app.route("/logout")
 def logout():
     if session.get("userId"):
-        session.clear()
+        session.pop("userId", defualt=None)
+        session.pop("userName", default=None)
         logfire.info("User logged out successfully")
     else:
         logfire.info("No user was logged in")

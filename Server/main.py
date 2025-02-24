@@ -3,6 +3,7 @@ from .tools import *
 from flask import *
 import regex as re
 import logfire
+import time
 
 # Make the app
 app = Blueprint("main", __name__)
@@ -28,7 +29,13 @@ def geoLocation():
             if ip is not None:
                 if "," in ip:
                     data = []
-                    for ip in ip.split(", "):
+                    for ip in ip.split(", ", 10):
+                        # check if its more than an ip address
+                        # 123.123.123.123 = 15 characters
+                        if len(data) >= 15:
+                            logfire.warn("Too many IP addresses in the request", ip=ip)
+                            break
+
                         logfire.debug(f"Getting geo data for IP: {ip}")
                         geoData = getGeoData(ip)
                         
@@ -123,6 +130,28 @@ def api():
 # POST: /contact
 @app.route("/api/contact", methods=["POST"])
 def apiContact():
+    # Check for spam
+    lastContactAttempt = session.get("lastContactAttempt", 0)
+    lastContactCount = session.get("lastContactCount", 0)
+    if time.time() - lastContactAttempt < 60 or lastContactCount >= 2:
+        if lastContactCount >= 2 and time.time() - lastContactAttempt > (60*5):
+            logfire.info("Resetting contact form attempts")
+            session["lastContactCount"] = 0
+        else:
+            logfire.warn(
+                "Contact form is being spammed", 
+                lastContactAttempt=lastContactAttempt, 
+                lastContactCount=lastContactCount
+            )
+            
+            # If the form has been used more than 5 time during 
+            # their session then block them for 5 minutes
+            if lastContactCount > 5:
+                logfire.error("Too many contact form attempts in a short period of time. Blocking for 5 minutes")
+                session["lastContactAttempt"] = time.time() + 300
+                
+            return jsonify({"success": False, "error": ["Please wait before sending another message"]}), 429
+
     # Get data from the request
     data: dict = request.json
     errors = []
@@ -143,7 +172,12 @@ def apiContact():
     elif len(data.get("message")) < 10:
         errors.append("Message must be at least 10 characters")
         logfire.warn("Message must be at least 10 characters")
-        
+    
+    
+    logfire.info("Saving last email attempt in session")
+    session["lastContactAttempt"] = time.time()
+    session["lastContactCount"] = session.get("lastContactCount", 0) + 1
+
     # If there are errors then return them with a status code of 400
     if errors:
         logfire.warn("Errors in contact form", errors=errors)
@@ -156,9 +190,9 @@ def apiContact():
     ):
         # Message was sent successfully
         logfire.info("Message sent successfully")
-        return jsonify({"success": True, "message": "Message sent successfully!"}), 200
+        return jsonify({"success": True, "errors": ["Message sent successfully!"]}), 200
     
     else:
         # Message failed to send
         logfire.warn("Failed to send message")
-        return jsonify({"success": False, "message": "Failed to send message"}), 500
+        return jsonify({"success": False, "errors": ["Failed to send message"]}), 500
