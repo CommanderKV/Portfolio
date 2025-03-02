@@ -86,7 +86,10 @@
                 <section id="contact-footer" class="center">
                     <div>
                         <div id="contact" class="border-1 fill-primary">
-                            <form id="contact-form" class="center">
+                            <form id="contact-form" class="center" action="https://api.web3forms.com/submit" method="POST">
+                                <input type="hidden" name="access_key" value="3a106ade-d200-45f5-be46-4118b5879d5e"/>
+                                <input type="hidden" name="from_name" value="kyler.visserfamily.ca">
+                                
                                 <div id="contact-title">
                                     <h1><span class="orange">Contact</span> Me</h1>
                                     <p class="text-fade">I look forward to bringing my skills to your next project. Reach out to learn how I can contribute to your next success.</p>                    
@@ -94,15 +97,16 @@
                                 
                                 <div>
                                     <label for="email"><span class="const-color">const</span> email = <span class="green">"you@example.com"</span></label>
-                                    <input id="email" type="email" placeholder="you@example.com" class="fill-tertiary" required>
+                                    <input id="email"  class="fill-tertiary" type="email" name="email" placeholder="you@example.com" required>
                                 </div>
                                 <div>
                                     <label for="message"><span class="const-color">const</span> message = <span class="green">"Interested in collaborating"</span></label>
-                                    <textarea id="message" placeholder="Your message here..." class="fill-tertiary" required></textarea> 
+                                    <textarea id="message" name="message" placeholder="Your message here..." class="fill-tertiary" required></textarea> 
                                 </div>
 
+                                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
                                 <button id="contact-submit" class="border-1 fill-tertiary" type="submit">Send message</button>
-                                <p id="error-msg"></p>
                             </form>
                         </div>
                         <div id="extra-contact">
@@ -146,9 +150,6 @@
         </footer>
         {% if disableHeader is not defined %}
             <script src="/static/js/base.js" defer></script>
-        {% endif %}
-        {% if disableContact is not defined %}
-            <script src="/static/js/contactScript.js" defer></script>
         {% endif %}
         {% block scripts %}{% endblock %}
     </body>
