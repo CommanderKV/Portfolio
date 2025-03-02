@@ -8,6 +8,11 @@ app = Blueprint("main", __name__)
 # Start the scheduler
 startBackgroundScheduler()
 
+# GET: /robots.txt
+@app.route("/robots.txt", methods=["GET"])
+def robots():
+    return send_from_directory("static", "robots.txt")
+
 # GET: /
 @app.route("/", methods=["GET"])
 def home():
