@@ -1,7 +1,6 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from . import HEADERS, COLORS
 from urllib.parse import urlencode
-from .models.User import Users
 from flask import *
 import requests
 import logfire
@@ -19,118 +18,6 @@ def getGeoData(ip: str):
     else:
         logfire.debug("Failed to get data")
         return None
-
-@logfire.instrument("Getting github code")
-def getGithubCode() -> str | bool:
-    """
-    Returns the url to redirect the user to for 
-    authorization or True if the user is logged in 
-    and the user exists otherwise it returns False
-    """
-    if session.get("oauthToken"):
-        if Users.query.filter_by(githubOAuthToken=session["oauthToken"]).first():
-            logfire.info("User already logged in", session=session.__dict__)
-            return True
-        else:
-            logfire.info("User not found in database. Logging out", session=session.__dict__)
-            session.clear()
-            return False
-    
-    else:
-        logfire.info("User not logged in. Redirecting to github for authorization")
-        params = {
-            "client_id": os.getenv("GITHUB_CLIENT_ID"),
-            "scope": "read:user,user:email"
-        }
-        url = "https://github.com/login/oauth/authorize?"
-        url += urlencode(params)
-        return url
-
-@logfire.instrument("Getting github access token")
-def getGithubAuthToken(args: dict[str, str]) -> str | None:
-    # Check if the code is in the args
-    if "code" not in args:
-        logfire.error("Authorization failed code not in args", request=args)
-        return None
-    
-    # Set code
-    code = args.get("code")
-    logfire.debug("Exchanging code for access token", code=code)
-    
-    # Get the access token
-    params = {
-        "code": code,
-        "client_id": os.getenv("GITHUB_CLIENT_ID"),
-        "client_secret": os.getenv("GITHUB_CLIENT_SECRET")
-    }
-    url = "https://github.com/login/oauth/access_token"
-    response = requests.request(
-        "POST",
-        url,
-        data=urlencode(params),
-        headers={"Accept": "application/json"}
-    )
-    
-    if response.status_code != 200:
-        logfire.error("Failed to get access token", response=response.json())
-        return None
-    
-    oauthToken = response.json()
-    if "access_token" not in oauthToken:
-        logfire.error(f"Failed to get access token", response=oauthToken)
-        return None
-
-    oauthToken = oauthToken["access_token"]
-    logfire.info("returning auth token", oauthToken=oauthToken)
-    return oauthToken
-
-@logfire.instrument("Getting user details from github")
-def getUserDetails(authToken) -> dict[str, str] | None:
-    # Get the username and name from github
-    url = "https://api.github.com/user"
-    logfire.debug("Sending request to get user details", url=url)
-    response = requests.get(
-        url,
-        headers={
-            "Authorization": f"Bearer {authToken}"
-        }   
-    )
-
-    if response.status_code != 200:
-        logfire.error("Failed to get user details returning None", response=response.json())
-        return None
-    
-    data = response.json()
-    logfire.debug("Data retrieved for name and username", data=data)
-    
-    logfire.debug("Filtering data")
-    returnData = {
-        "name": data["name"],
-        "username": data["login"],
-        "avatar": data["avatar_url"],
-    }
-    
-    # Get the users email from github
-    url = "https://api.github.com/user/emails"
-    logfire.info("Getting users email", url=url)
-    response = requests.get(
-        url,
-        headers={
-            "Authorization": f"Bearer {authToken}"
-        }
-    )
-    
-    if response.status_code != 200:
-        logfire.error("Failed to get user email returning None", response=response.json())
-        return None
-    
-    emails = response.json()
-    logfire.info("Emails retrieved", emails=emails)
-    
-    returnData["email"] = next((email["email"] for email in emails if email["primary"]), None)
-    logfire.info("Returning user details", data=returnData)
-    return returnData
-
 
 # Get the images for repositories
 @logfire.instrument("Getting images")
@@ -263,9 +150,11 @@ def getGithubRepos(limit: int=-1) -> list[dict]:
             for key in data:
                 if key in COLORS:
                     if COLORS[key]["svg"] == "" or COLORS[key]["svg"] == None:
-                        svg = None
+                        svg = key
                     else:
                         svg = COLORS[key]["svg"]
+                else:
+                    svg = key
                 result[key] = {
                     "percent": round((data[key] / total) * 100, 1),
                     "color": COLORS[key]["color"] if key in COLORS else "#000000",

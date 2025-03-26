@@ -1,5 +1,3 @@
-from logging import FileHandler, WARNING
-from flask_sqlalchemy import SQLAlchemy
 from .getColors import run as getColors
 from datetime import timedelta
 from flask import *
@@ -34,64 +32,23 @@ HEADERS = {
 
 
 
-db = SQLAlchemy()
-github = None
-
 # Make the app
 def create_app():
-    global db, github
-    
     app = Flask(__name__)
-    
-    # Logging errors
-    #file_handler = FileHandler("error.log")
-    #file_handler.setLevel(WARNING)
     
     app.secret_key = os.getenv("FLASK_SECRET_KEY")
     app.permanent_session_lifetime = timedelta(days=7)
-
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
     
     logfire.instrument_flask(app, exclude_urls="/static/*")
-
-    # -------------------
-    #   Database config
-    # -------------------
-    db.init_app(app)
     
-    # Create tables if they don't exist
-    with app.app_context():
-        from .models.Role import Roles
-        from .models.User import Users
-        db.create_all()
-    
-        # Check for roles
-        roles = Roles.query.all()
-        if not roles:
-            db.session.add(Roles("admin"))
-            db.session.add(Roles("user"))
-            db.session.commit()
-        
-        if not any(role.name == "admin" for role in roles):
-            db.session.add(Roles("admin"))
-            db.session.commit()
-        
-        if not any(role.name == "user" for role in roles):
-            db.session.add(Roles("user"))
-            db.session.commit()
-
-    # ----------------------------------
-    #   Setup the controllers / routes
-    # ----------------------------------
+    # ----------
+    #   Routes
+    # ----------
     from . import main
-    from .controllers import login, dashboard
-    from .tools import getGeoData
     app.register_blueprint(main.app)
-    app.register_blueprint(login.app)
-    app.register_blueprint(dashboard.app)
     
     # Geo location data by ip when the post request is made
+    from .tools import getGeoData
     @app.before_request
     def geoLocation():
         if request.environ.get("HTTP_X_FORWARDED_FOR"):
@@ -141,13 +98,8 @@ def create_app():
                     
                     logfire.info("Obtained geo data", data=session.get("geoData"))
 
-
     @app.errorhandler(404)
     def not_found_error(error):
         return render_template("base.html", disableHeader=True, disableContact=True), 404
-
-    # @app.errorhandler(500)
-    # def internal_error(error):
-    #     return render_template("base.html", disableHeader=True, disableContact=True), 500
     
     return app

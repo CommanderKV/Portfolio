@@ -28,12 +28,8 @@ logfire.configure(token=os.getenv("LOGFIRE_KEY"))
 #     Import Server after configuring 
 #   Logfire otherwise it will error out
 # ---------------------------------------
-from Server import create_app, db
+from Server import create_app
 app = create_app()
-
-# Create tables if they don't exist
-with app.app_context():
-    db.create_all()
 
 if __name__ == '__main__':
     app.run(debug=True)
